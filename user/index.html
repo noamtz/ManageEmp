@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>User</title>
+
+   <link href="../kendoui/examples/content/shared/styles/examples-offline.css" rel="stylesheet">
+   <link href="../kendoui/styles/kendo.common.min.css" rel="stylesheet">
+   <link href="../kendoui/styles/kendo.default.min.css" rel="stylesheet">
+
+   <script src="../kendoui/js/jquery.min.js"></script>
+   <script src="../kendoui/js/kendo.web.min.js"></script>
+   <script src="../kendoui/examples/content/shared/js/console.js"></script>
+<style>
+#content_wrapper
+{
+    width: 1000px;
+    height: auto;
+    border: groove;
+	margin: auto;
+}
+
+#header {
+   width: auto;
+   height: 150px;
+   border: groove;
+ }
+#left-pane {
+    width: 20%;
+    height: 500px;
+	float:left;
+    border: groove;
+ }
+#central-pane {
+    width: 78%;
+    height: 500px;
+    float:left;
+    border: groove;
+	margin-left:5px;
+ }
+#footer {
+    width: auto;
+    height: 150px;
+    border: groove;
+	clear: both;
+ }
+ul
+{
+    list-style-type: none;
+}
+li{
+	margin:5px;
+}
+
+.nav-button{
+	width: 100px;
+}
+
+.head-line{
+	text-align: center;
+}
+
+#options-place{
+	//display: none;
+}
+
+</style>
+
+</head>
+<body>
+   <div id="content_wrapper">
+	<div id="header"></div>
+
+    <div id="left-pane">
+	<h2 class="head-line"> Options </h2>
+
+	<ul>
+	    <li><a class="k-button nav-button" href="javascript:void(0)" onclick="showGrid('users')">Edit Details</a></li>
+  	    <li><a class="k-button nav-button" href="javascript:void(0)" onclick="showGrid('shifts')">Manage Shifts</a></li>
+    	<li><a class="k-button nav-button" href="#">Contact</a></li>
+	</ul>
+
+
+	</div>
+
+	<div id="central-pane">
+
+	   <div id="options-place">
+			
+	       <div id="cap-view" class="demo-section">
+
+	            <div id="cap" class="black-cap"></div>
+
+	            <div id="options">
+	            		<h3>Month</h3>
+	          			  <input id="month" value="1" />
+	          			  <button class="k-button" id="get">Choose</button>
+	         	 </div>			
+	      </div>
+	</div> <!-- end of option area --> 
+
+	<div id="grid-place"></div>
+
+	</div> <!-- end of central-pane --> 
+	<div id="footer"></div>
+	
+
+</div>
+    <script>  
+			
+			function showShiftSelection(){
+				$( "#grid-place" ).append
+			}
+
+			function showGrid(type){
+				$(document).ready(function () {
+					if($("#grid-wrapper").length > 0){
+						
+						$("#grid-wrapper").remove();
+					} 
+					$( "#grid-place" ).append("<div id='grid-wrapper' class='k-content' style='width:auto;' ><div id='grid'></div></div>");
+					if(type == 'users'){
+						$('#options-place').toggle();
+						showUsersGrid();
+						$('#options-place').toggle();
+					}else if(type == 'shifts'){
+						showShiftsGrid();
+					}
+				});
+			}
+	
+			function showUsersGrid(){
+				$(document).ready(function () {					
+                   var crudServiceBaseUrl = "http://demos.kendoui.com/service",
+                       dataSource = new kendo.data.DataSource({
+                           transport: {
+                               read:  {
+                                   url: 'localhost/mock.php',
+								   dataType: "jsonp"
+
+                               },
+                               update: {
+                                   url: 'http://my.jce.ac.il/~noamtz/web/mock_create.php',
+                                   dataType: "jsonp"
+                               },
+                               destroy: {
+                                   url: 'http://my.jce.ac.il/~noamtz/web/mock_create.php',
+                                   dataType: "jsonp"
+                               },
+                               create: {
+                                   url: 'http://my.jce.ac.il/~noamtz/web/mock_create.php',
+                                   dataType: "jsonp"
+                               },
+                               parameterMap: function(options, operation) {
+                                   if (operation !== "read" && options.models) {
+                                       return {models: kendo.stringify(options.models)};
+                                   }
+                               }
+                           },
+                           batch: true,
+                           pageSize: 20,
+                           schema: {
+                               model: {
+                                   id: "idUsers",
+                                   fields: {
+                                       idUsers: { editable: false, nullable: true },
+                                       email: { validation: { required: true } },
+                                       firstname: { validation: { required: true} },
+                                       lastname: {  validation: { required: true}},
+                                       phone: { type: "number"}
+                                   }
+                               }
+                           }
+                       });
+
+                   $("#grid").kendoGrid({
+                       dataSource: dataSource,
+                       navigatable: true,
+                       pageable: true,
+					   height: 365,
+					   sortable: true,
+                       toolbar: ["create", "save", "cancel"],
+                       columns: [
+                           { field: "email", title: "Email"},
+                           { field: "firstname", title: "First Name", width: 110 },
+                           { field: "lastname", title: "Last Name", width: 110 },
+                           { field: "phone",  title: "Phone", width: 110 },
+                           { command: "destroy", title: "&nbsp;", width: 90 }],
+                       editable: true
+                   });
+               });
+			}	
+
+			function showShiftsGrid(){
+				 $(document).ready(function () {					
+                   var crudServiceBaseUrl = "http://demos.kendoui.com/service",
+                       dataSource = new kendo.data.DataSource({
+                           transport: {
+                               read:  {
+                                   url: 'http://my.jce.ac.il/~noamtz/web/mock_user_shifts.php',
+				   dataType: "jsonp"
+
+                               },
+                               update: {
+                                   url: 'http://my.jce.ac.il/~noamtz/web/mock_create.php',
+                                   dataType: "jsonp"
+                               },
+                               destroy: {
+                                   url: 'http://my.jce.ac.il/~noamtz/web/mock_create.php',
+                                   dataType: "jsonp"
+                               },
+                               create: {
+                                   url: 'http://my.jce.ac.il/~noamtz/web/mock_create.php',
+                                   dataType: "jsonp"
+                               },
+                               parameterMap: function(options, operation) {
+                                   if (operation !== "read" && options.models) {
+                                       return {models: kendo.stringify(options.models)};
+                                   }
+                               }
+                           },
+                           batch: true,
+                           pageSize: 20,
+                           schema: {
+                               model: {
+                                   id: "idUsers",
+                                   fields: {
+                                       idUsers: { editable: false, nullable: true },
+                                       email: { validation: { required: true } },
+                                       firstname: { validation: { required: true} },
+                                       lastname: {  validation: { required: true}},
+                                       phone: { type: "number"}
+                                   }
+                               }
+                           }
+                       });
+
+                   $("#grid").kendoGrid({
+                       dataSource: dataSource,
+                       navigatable: true,
+                       pageable: true,
+					   height: 365,
+					   sortable: true,
+                       toolbar: ["create", "save", "cancel"],
+                       columns: [
+                           { field: "email", title: "Email"},
+                           { field: "firstname", title: "First Name", width: 110 },
+                           { field: "lastname", title: "Last Name", width: 110 },
+                           { field: "phone",  title: "Phone", width: 110 },
+                           { command: "destroy", title: "&nbsp;", width: 90 }],
+                       editable: true
+                   });
+               });
+			}	
+			//Drop down list
+			 $(document).ready(function() {
+                    var data = [
+                        { text: "January", value: "1" },
+                        { text: "February", value: "2" },
+                        { text: "March", value: "3" }
+                    ];
+
+                    // create DropDownList from input HTML element
+                    $("#month").kendoDropDownList({
+                        dataTextField: "text",
+                        dataValueField: "value",
+                        dataSource: data,
+                        index: 0,
+                        change: onChange
+                    });
+
+
+                    var month = $("#month").data("kendoDropDownList");
+
+                    month.select(0);
+
+                    function onChange() {
+                        var value = $("#month").val();
+                        $("#cap")
+                            .toggleClass("black-cap", value == 1)
+                            .toggleClass("orange-cap", value == 2)
+                            .toggleClass("grey-cap", value == 3);
+                    };
+	
+                    $("#get").click(function() {
+                        alert('Thank you! Your Choice is:\n\nMonth ID: '+month.value() + '\n\nMonth Text: '+month.text());
+                    });
+                });
+	</script>
+</div>
+
+</body>
+</html>

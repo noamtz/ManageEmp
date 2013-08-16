@@ -1,0 +1,52 @@
+#content_wrapper
+{
+    width: 1000px;
+    height: auto;
+    border: groove;
+	margin: auto;
+}
+
+#header {
+   width: auto;
+   height: 150px;
+   border: groove;
+ }
+#left-pane {
+    width: 20%;
+    height: 500px;
+	float:left;
+    border: groove;
+ }
+#central-pane {
+    width: 78%;
+    height: 500px;
+    float:left;
+    border: groove;
+	margin:auto;
+ }
+#footer {
+    width: auto;
+    height: 150px;
+    border: groove;
+	clear: both;
+ }
+ul
+{
+    list-style-type: none;
+}
+li{
+	margin:5px;
+}
+
+.nav-button{
+	width: 100px;
+}
+
+.head-line{
+	text-align: center;
+}
+
+#grid-wrapper{
+	height: auto;
+	//display: none;
+}
