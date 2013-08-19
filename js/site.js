@@ -28,10 +28,6 @@ function showUsersGrid(){
                                    url:  crudServiceBaseUrl + 'update_users.php',
                                    dataType: "jsonp"
                                },
-                               destroy: {
-                                   url: crudServiceBaseUrl + 'mock_create.php',
-                                   dataType: "jsonp"
-                               },
                                create: {
                                    url: crudServiceBaseUrl + 'create_users.php',
                                    dataType: "jsonp"
@@ -52,6 +48,7 @@ function showUsersGrid(){
                                        email: { validation: { required: true } },
                                        firstname: { validation: { required: true} },
                                        lastname: {  validation: { required: true}},
+									   roles: {},
                                        phone: { type: "number"}
                                    }
                                }
@@ -61,23 +58,26 @@ function showUsersGrid(){
                    $("#grid").kendoGrid({
                        dataSource: dataSource,
 					   change: onUsersChange,
-					   selectable: "multiple",
+					   selectable: "multiple, row",
                        navigatable: true,
                        pageable: true,
-                       height: 500,
+                       height: 600,
 					   sortable: true,
-                       toolbar: ["create", "save", "cancel"],
+                       toolbar: ["create"],
                        columns: [
                            { field: "email", title: "Email"},
                            { field: "firstname", title: "First Name", width: 110 },
                            { field: "lastname", title: "Last Name", width: 110 },
                            { field: "phone",  title: "Phone", width: 110 },
-                           { command: "destroy", title: "&nbsp;", width: 90 }],
-                       editable: true
+						   { command: ["edit"], title: "&nbsp;", width: "80px" }],
+                       editable: {
+							mode: "popup",
+							template: kendo.template($("#popup_editor").html())
+					   }
                    });
                });
 			}	
-
+				
 			function onUsersChange(e){
 				    var grid = e.sender;
         			var currentDataItem = grid.dataItem(this.select());
@@ -135,7 +135,7 @@ function showUsersGrid(){
                         dataSource: datasource,
 						change: onShiftsChange,
 						selectable: "multiple",
-                        height: 430,
+                        height: 600,
                         sortable: true,
                         pageable: true,	
 						navigatable: true,
@@ -228,6 +228,14 @@ function showUsersGrid(){
                         scrollable: false,
 						selectable: "multiple",
                         sortable: true,
+						edit: function(e) {
+							$(e.container)
+								.find("input[name='role']")
+									.data("kendoDropDownList")
+									.bind("change", function(e) {
+										console.log("drop down changed");
+									});
+						},
                         pageable: true,
                         toolbar: ["create"],
                          columns: [
