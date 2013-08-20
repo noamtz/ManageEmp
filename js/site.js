@@ -1,4 +1,4 @@
-var DEBUG = false;	
+	var DEBUG = false;	
 
 function showGrid(type){
 				$(document).ready(function () {
@@ -58,7 +58,7 @@ function showUsersGrid(){
                    $("#grid").kendoGrid({
                        dataSource: dataSource,
 					   change: onUsersChange,
-					   selectable: "multiple, row",
+					   selectable: "row",
                        navigatable: true,
                        pageable: true,
                        height: 600,
@@ -72,7 +72,7 @@ function showUsersGrid(){
 						   { command: ["edit"], title: "&nbsp;", width: "80px" }],
                        editable: {
 							mode: "popup",
-							template: kendo.template($("#popup_editor").html())
+							template: kendo.template($("#popup_editor_users").html())
 					   }
                    });
                });
@@ -178,7 +178,7 @@ function showUsersGrid(){
 			}
 
             function detailInitShifts(e) {
-					var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/web/";
+					var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/ManageEmp/";
 					var idShift = e["data"]["idShifts"];
 					if(DEBUG)
 						console.log("Shift part of shift id: " + idShift + " is opened");
@@ -190,7 +190,7 @@ function showUsersGrid(){
 									dataType: "jsonp"
                                },
                                update: {
-                                   url:  crudServiceBaseUrl ,
+                                   url:  crudServiceBaseUrl + "asdasd.php",
                                    dataType: "jsonp"
                                },
                                destroy: {
@@ -198,7 +198,7 @@ function showUsersGrid(){
                                    dataType: "jsonp"
                                },
                                create: {
-                                   url: crudServiceBaseUrl,
+                                   url: crudServiceBaseUrl + 'create_shiftpart.php',
                                    dataType: "jsonp"
                                },
 								parameterMap: function(options, operation) {
@@ -211,12 +211,10 @@ function showUsersGrid(){
                             pageSize: 20,
                             schema: {
                                model: {
-                                   id: "email",
+                                   id: "idShifts",
                                    fields: {
-										firstname: { validation: { required: true } },
-										lastname: { validation: { required: true } },
-										role: { validation: { required: true } },
-										UnitPrice: { type: "number", validation: { required: true, min: 1} }
+										idUsers: { validation: { required: true } },
+										idRoles: { validation: { required: true } }
                                    }
                                }
                            }
@@ -233,37 +231,34 @@ function showUsersGrid(){
 								.find("input[name='role']")
 									.data("kendoDropDownList")
 									.bind("change", function(e) {
-										console.log("drop down changed");
+										var input = e.sender;
+										var currentDataItem = input.dataItem(this.select());
+											console.log(currentDataItem);
+									});
+									
+							$(e.container)
+								.find("input[name='name']")
+									.data("kendoDropDownList")
+									.bind("change", function(e) {
+										var input = e.sender;
+										var currentDataItem = input.dataItem(this.select());
+											console.log(currentDataItem);
 									});
 						},
                         pageable: true,
                         toolbar: ["create"],
-                         columns: [
-                            { field: "firstname", title:"First Name", width: "110px" },
-                            { field: "lastname", title:"Last Name" },
-							{ field: "role", title: "Role", width: "200px", editor: categoryDropDownEditor},
+                        columns: [
+                            { field: "name", title:"Employee Name", width: "110px" },
+							{ field: "role", title: "Role", width: "200px"},
 							{ command: ["edit", "destroy"], title: "&nbsp;", width: "172px" }
 							],
-                         editable: true
+                         editable: {
+							mode: "popup",
+							template: kendo.template($("#popup_editor_shifts").html())
+						 }
                     });
                 }
-				
-				function categoryDropDownEditor(container, options) {
-					var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/web/";
-					console.log(options['model']['role']);
-                    $('<input />').kendoDropDownList({
-						dataTextField: "RoleName",
-                        dataValueField: "RoleID",
-						dataSource: {
-                            transport: {
-                                read: {
-                                    dataType: "jsonp",
-                                    url: "http://my.jce.ac.il/~noamtz/web/get_roles.php",
-                                }
-                            }
-                        }
-					}).appendTo(container);
-                }
+			
 				
 				function onShiftsPartChange(e){
 				    var grid = e.sender;

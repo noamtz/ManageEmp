@@ -41,32 +41,78 @@
 		
 	</div>
 	
-		<script id="popup_editor" type="text/x-kendo-template">		
-		
-			<p>Custom editor template</p>
-			
-			<label for="Email">Email: </label>
-			
+		<script id="popup_editor_users" type="text/x-kendo-template">		
+			<div class="k-edit-form-container">
+
+			<div class="k-edit-label">
+				<label for="email">Email: </label>
+			</div>
+			<div data-container-for="email" class="k-edit-field">
 			<input type="text" class="k-input k-textbox" name="Email" data-bind="value:email">
-		
+			</div>
+			
+			<div class="k-edit-label">
 				<label for="firstname">First Name: </label>
-			
+			</div>
+			<div data-container-for="firstname" class="k-edit-field">
 			<input type="text" class="k-input k-textbox" name="firstname" data-bind="value:firstname">
-		
+			</div>
+			<div class="k-edit-label">
 				<label for="lastname">Last Name: </label>
-			
+			</div>
+			<div data-container-for="lastname" class="k-edit-field">
 			<input type="text" class="k-input k-textbox" name="lastname" data-bind="value:lastname">
-		
+			</div>
+			<div class="k-edit-label">
 				<label for="roles">Roles: </label>
-				
+			</div>	
 			<!-- drop down list editor for field: "roles" -->
-			<input name="roles" 
+			<div data-container-for="role" class="k-edit-field">
+			<input name="role" 
 				data-bind="value:RoleName" 
 				data-value-field="RoleID" 
 				data-text-field="RoleName" 
 				data-source="dropDownDataSource" 
-				data-role="multiselect" style="width: 150px; float: right;" />
-
+				data-role="multiselect"/>
+			</div>
+			</div>
+		</script>
+		
+		<script id="popup_editor_shifts" type="text/x-kendo-template">		
+			<div class="k-edit-form-container">
+				<div class="k-edit-label">
+					<label for="roles">Employee Name: </label>
+				</div>	
+				<!-- drop down list editor for field: "roles" -->
+				<div data-container-for="name" class="k-edit-field">
+				<input name="name" 
+					data-bind="value:idUsers" 
+					data-value-field="idUsers" 
+					data-text-field="name" 
+					data-source="autoComplete" 
+					data-role="dropdownlist"/>
+				</div>
+				
+				<div class="k-edit-label">
+					<label for="roles">Roles: </label>
+				</div>	
+				<!-- drop down list editor for field: "roles" -->
+				<div data-container-for="role" class="k-edit-field">
+				<input name="role" 
+					data-bind="value:role" 
+					data-value-field="role" 
+					data-text-field="RoleName" 
+					data-source="dropDownDataSource" 
+					cascade-from="name"
+					data-role="dropdownlist"
+					/>
+						<input type ="hidden" name="idShifts" 
+							data-bind="value:idShifts"
+							data-value-field="idShifts" /> 
+				</div>
+				
+			</div>
+			
 		</script>
 		
 		<script>
@@ -74,6 +120,14 @@
 				transport: {
 					read: {
 						url: 'http://my.jce.ac.il/~noamtz/ManageEmp/get_roles.php',
+						dataType: "jsonp"
+					}
+				}
+			});
+			var autoComplete = new kendo.data.DataSource({
+				transport: {
+					read: {
+						url: 'http://my.jce.ac.il/~noamtz/ManageEmp/users_names.php',
 						dataType: "jsonp"
 					}
 				}

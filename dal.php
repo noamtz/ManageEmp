@@ -103,7 +103,7 @@ class DAL{
 	function getShiftParts($shiftId){
 		include 'conn.php';
 
-		$query = sprintf("SELECT idShifts , lastname, firstname , type as role, userEmail as semail
+		$query = sprintf("SELECT idShifts ,  CONCAT(firstname , ' ' , lastname) as name , type as role, idUsers
 						  FROM shiftPart, Users, Roles
 						  WHERE idShifts='%s' AND userEmail =  Users.email AND Roles.idRoles = shiftPart.idRoles", $shiftId);
 
@@ -122,7 +122,8 @@ class DAL{
 	function getRoles($userEmail){
 		include 'conn.php';
 		
-		$query = "SELECT  idRoles as RoleID, type as RoleName from Roles";
+		$query = "SELECT  idRoles as RoleID, type as RoleName 
+				  FROM Roles";
 		if(isset($userEmail))
 			$query = sprintf("SELECT Roles.idRoles as RoleID, Roles.type as RoleName
 							  FROM Roles, Users_has_Roles 
@@ -135,6 +136,25 @@ class DAL{
 	  		array_push($items, $row);
 		}
 		return $items;
+	}
+	
+	function getUsersNames(){
+		include 'conn.php';
+		
+		$query = "SELECT idUsers , CONCAT(firstname , ' ' , lastname) as name 
+				  FROM `Users`";
+				  
+		$result = mysqli_query($con,$query);
+		$items = array();
+		while($row = mysqli_fetch_object($result))
+		{
+	  		array_push($items, $row);
+		}
+		return $items;
+	}
+	
+	function createShiftPart(){
+		
 	}
 }
 ?>
