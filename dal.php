@@ -104,8 +104,8 @@ class DAL{
 		include 'conn.php';
 
 		$query = sprintf("SELECT idShifts ,  CONCAT(firstname , ' ' , lastname) as name , type as role, idUsers
-						  FROM shiftPart, Users, Roles
-						  WHERE idShifts='%s' AND userEmail =  Users.email AND Roles.idRoles = shiftPart.idRoles", $shiftId);
+						  FROM shiftPart, users, roles
+						  WHERE idShifts='%s' AND userEmail =  users.email AND roles.idRoles = shiftPart.idRoles", $shiftId);
 
 		$result = mysqli_query($con,$query);
 		if(!$result){
@@ -141,7 +141,7 @@ class DAL{
 	function getUsersNames(){
 		include 'conn.php';
 		
-		$query = "SELECT idUsers , CONCAT(firstname , ' ' , lastname) as name 
+		$query = "SELECT email as idUsers , CONCAT(firstname , ' ' , lastname) as name 
 				  FROM `Users`";
 				  
 		$result = mysqli_query($con,$query);
@@ -153,8 +153,21 @@ class DAL{
 		return $items;
 	}
 	
-	function createShiftPart(){
+	function createShiftPart($data){
+		include 'conn.php';
 		
+		$result = array();
+
+		$arr = $data[0];
+		$values = sprintf("('%s','%s','%s')", $arr['idUsers'], $arr['idShifts'], $arr['idRoles']);
+		$query = sprintf('INSERT INTO ShiftPart (userEmail, idRoles, idShift) 
+						  VALUES %s', $values);
+		if(mysqli_query($con,$query)){			
+			$arr["shiftPartId"] = $con->insert_id;	
+			array_push($result, $arr);
+		}
+		
+		return json_encode($result);
 	}
 }
 ?>

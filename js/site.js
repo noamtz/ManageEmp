@@ -92,7 +92,7 @@ function showUsersGrid(){
 			}
 
 			function showShiftsGrid(){
-				var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/web/";
+				var crudServiceBaseUrl = "http://localhost/ManageEmp/";
 				var datasource = new kendo.data.DataSource({
 									transport: {
 								read:  {
@@ -178,7 +178,7 @@ function showUsersGrid(){
 			}
 
             function detailInitShifts(e) {
-					var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/ManageEmp/";
+					var crudServiceBaseUrl = "http://localhost/ManageEmp/";
 					var idShift = e["data"]["idShifts"];
 					if(DEBUG)
 						console.log("Shift part of shift id: " + idShift + " is opened");
@@ -203,6 +203,9 @@ function showUsersGrid(){
                                },
 								parameterMap: function(options, operation) {
                                    if (operation !== "read" && options.models) {
+											options.models[0]["idShifts"] = idShift;
+											options.models[0]["idRoles"] = $("#roleID").val();
+											options.models[0]["idUsers"] = $("#userID").val();
                                        return {models: kendo.stringify(options.models)};
                                    }
                                }							   
@@ -211,11 +214,11 @@ function showUsersGrid(){
                             pageSize: 20,
                             schema: {
                                model: {
-                                   id: "idShifts",
-                                   fields: {
-										idUsers: { validation: { required: true } },
-										idRoles: { validation: { required: true } }
-                                   }
+								   id: "idShifts",
+								   fields:{
+									idUsers:{},
+									idRoles:{}
+								   }
                                }
                            }
 					});
@@ -234,6 +237,10 @@ function showUsersGrid(){
 										var input = e.sender;
 										var currentDataItem = input.dataItem(this.select());
 											console.log(currentDataItem);
+										$(document).ready(function () {
+										$("#roleID").val(currentDataItem["RoleID"]);
+										
+										});
 									});
 									
 							$(e.container)
@@ -243,13 +250,17 @@ function showUsersGrid(){
 										var input = e.sender;
 										var currentDataItem = input.dataItem(this.select());
 											console.log(currentDataItem);
+										$("#userID").val(currentDataItem["idUsers"]);
+										document.getElementById('userID').value = currentDataItem["idUsers"];
+										
 									});
+									
 						},
                         pageable: true,
                         toolbar: ["create"],
                         columns: [
-                            { field: "name", title:"Employee Name", width: "110px" },
-							{ field: "role", title: "Role", width: "200px"},
+                            { field: "uname", title:"Employee Name", width: "110px" },
+							{ field: "urole", title: "Role", width: "200px"},
 							{ command: ["edit", "destroy"], title: "&nbsp;", width: "172px" }
 							],
                          editable: {

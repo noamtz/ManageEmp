@@ -48,20 +48,26 @@
 				<label for="email">Email: </label>
 			</div>
 			<div data-container-for="email" class="k-edit-field">
-			<input type="text" class="k-input k-textbox" name="Email" data-bind="value:email">
+			<input type="email" class="k-input k-textbox" name="Email" data-bind="value:email" required>
 			</div>
 			
 			<div class="k-edit-label">
 				<label for="firstname">First Name: </label>
 			</div>
 			<div data-container-for="firstname" class="k-edit-field">
-			<input type="text" class="k-input k-textbox" name="firstname" data-bind="value:firstname">
+			<input type="text" class="k-input k-textbox" name="firstname" data-bind="value:firstname" required>
 			</div>
 			<div class="k-edit-label">
 				<label for="lastname">Last Name: </label>
 			</div>
 			<div data-container-for="lastname" class="k-edit-field">
-			<input type="text" class="k-input k-textbox" name="lastname" data-bind="value:lastname">
+			<input type="text" class="k-input k-textbox" name="lastname" data-bind="value:lastname" required>
+			</div>
+			<div class="k-edit-label">
+				<label for="phone">Phone: </label>
+			</div>
+			<div data-container-for="lastname" class="k-edit-field">
+			<input type="phone" class="k-input k-textbox" name="phone" data-bind="value:phone">
 			</div>
 			<div class="k-edit-label">
 				<label for="roles">Roles: </label>
@@ -86,9 +92,11 @@
 				<!-- drop down list editor for field: "roles" -->
 				<div data-container-for="name" class="k-edit-field">
 				<input name="name" 
-					data-bind="value:idUsers" 
-					data-value-field="idUsers" 
-					data-text-field="name" 
+					data-bind="value:uname" 
+					data-value-field="name" 
+					data-text-field="name"
+					data-option-label="Select Employee..."
+					data-value-primitive="true" 	
 					data-source="autoComplete" 
 					data-role="dropdownlist"/>
 				</div>
@@ -98,28 +106,38 @@
 				</div>	
 				<!-- drop down list editor for field: "roles" -->
 				<div data-container-for="role" class="k-edit-field">
-				<input name="role" 
-					data-bind="value:role" 
-					data-value-field="role" 
-					data-text-field="RoleName" 
+				<input name="role" id="sdfsf"
+					data-bind="value: urole" 
+					data-value-field="RoleName" 
+					data-text-field="RoleName"
+					data-option-label="Select Role..."
+					data-value-primitive="true" 						
 					data-source="dropDownDataSource" 
-					cascade-from="name"
 					data-role="dropdownlist"
 					/>
-						<input type ="hidden" name="idShifts" 
-							data-bind="value:idShifts"
-							data-value-field="idShifts" /> 
+					
+				</div>
+				<div data-container-for="idemp" class="k-edit-field">
+				<input name="idemp" id="userID" type="hidden"
+					data-bind="value: idemp" 
+					data-value-field="idemp"
+					data-text-field="idemp"
+					/>
+					</div>
+				<div data-container-for="idrole" class="k-edit-field">	
+				<input name="idrole" id="roleID" type="hidden"
+					data-bind="value: idrole" 
+					data-value-field="idrole" />
 				</div>
 				
 			</div>
-			
 		</script>
 		
 		<script>
 			var dropDownDataSource = new kendo.data.DataSource({
 				transport: {
 					read: {
-						url: 'http://my.jce.ac.il/~noamtz/ManageEmp/get_roles.php',
+							url: 'http://localhost/ManageEmp/get_roles.php',
 						dataType: "jsonp"
 					}
 				}
@@ -127,7 +145,7 @@
 			var autoComplete = new kendo.data.DataSource({
 				transport: {
 					read: {
-						url: 'http://my.jce.ac.il/~noamtz/ManageEmp/users_names.php',
+						url: 'http://localhost/ManageEmp/users_names.php',
 						dataType: "jsonp"
 					}
 				}
