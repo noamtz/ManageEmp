@@ -7,6 +7,6 @@
 
 	header('Content-type: application/x-javascript; charset=utf-8');
 	$dal = new DAL();
-
-	echo $callback . '(' . $dal->getUsers() . ')';
+	$result = $dal->getUsers();
+	echo $callback . '(' . $result  . ')';
 ?>

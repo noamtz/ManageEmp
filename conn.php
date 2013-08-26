@@ -1,6 +1,6 @@
 <?php
 
-$con=mysqli_connect("localhost","noamtz","Noam23tz","noamtz");
+$con=mysqli_connect("localhost","root","noam","managedb");
 
 // Check connection
 if (mysqli_connect_errno())

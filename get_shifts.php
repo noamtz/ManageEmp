@@ -6,6 +6,6 @@
 	
 	$dal = new DAL();
 		
-	echo $callback . '(' . $dal->getShifts() . ')';
+	echo sprintf('%s(%s)',$callback,$dal->getShifts());
 
 ?>

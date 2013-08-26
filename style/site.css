@@ -8,18 +8,18 @@
 
 #header {
    width: auto;
-   height: 150px;
+   height: 50px;
    border: groove;
  }
 #left-pane {
     width: 20%;
-    height: 600px;
+    height: 800px;
 	float:left;
     border: groove;
  }
 #central-pane {
     width: 78%;
-    height: 600px;
+    height: 800px;
     float:left;
     border: groove;
 	margin:auto;

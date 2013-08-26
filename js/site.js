@@ -1,5 +1,16 @@
-	var DEBUG = false;	
-
+   var DEBUG = false;	
+   var crudServiceBaseUrl = "http://localhost/ManageEmp/"
+   
+function twoDigits(d) {
+    if(0 <= d && d < 10) return "0" + d.toString();
+    if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+    return d.toString();
+}
+   
+function formatDate(date, sep){
+	return twoDigits(date.getFullYear() + sep + twoDigits(date.getMonth()+1) + sep + twoDigits(date.getDate()) );
+}   
+   
 function showGrid(type){
 				$(document).ready(function () {
 					if($("#grid-wrapper").length > 0){
@@ -17,8 +28,7 @@ function showGrid(type){
 	
 function showUsersGrid(){
 	$(document).ready(function () {
-        var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/web/",
-        dataSource = new kendo.data.DataSource({
+        var dataSource = new kendo.data.DataSource({
 			transport: {
 						read:  {
 								url: crudServiceBaseUrl + 'get_users.php',
@@ -61,7 +71,30 @@ function showUsersGrid(){
 					   selectable: "row",
                        navigatable: true,
                        pageable: true,
-                       height: 600,
+                       height: 800,
+					   edit: function(e) {
+							var userId = $(e.container).find("input[name='Email']").val();
+							var userRoles = new kendo.data.DataSource({
+								transport: {
+									read: {
+										url: crudServiceBaseUrl + 'get_user_roles.php?userId=' + userId,
+										dataType: "jsonp"
+									}
+								}
+							});
+							userRoles.read();
+							userRoles.fetch(function(){
+								console.log('USER-ID: ');
+								var data = userRoles.data();
+								var arr=[];
+								for(var i=0;i<data.length;i++){
+									arr.push(data[i]['idRoles']);
+								}
+								var msroles = $("#uroleMS").data("kendoMultiSelect");
+								msroles.value(arr);
+							});
+								
+					   },
 					   sortable: true,
                        toolbar: ["create"],
                        columns: [
@@ -91,8 +124,7 @@ function showUsersGrid(){
 						console.log("Email:" + email + " , First Name:" + firstname + " , Last Name:" + lastname + " , Phone:" + phone);
 			}
 
-			function showShiftsGrid(){
-				var crudServiceBaseUrl = "http://localhost/ManageEmp/";
+function showShiftsGrid(){
 				var datasource = new kendo.data.DataSource({
 									transport: {
 								read:  {
@@ -112,7 +144,17 @@ function showUsersGrid(){
                                    dataType: "jsonp"
                                },
 								parameterMap: function(options, operation) {
-                                   if (operation !== "read" && options.models) {
+									console.log("Log: ");
+									if (operation !== "read" && options.models) {
+										for(var i=0;i<options.models.length;i++){
+											var start = new Date(options.models[i]['start']);
+											var end = new Date(options.models[i]['end']);
+											options.models[i]['start'] = formatDate(start,"-");
+											options.models[i]['end'] = formatDate(end,"-");
+											
+											console.log("START: " + formatDate(start,","));
+											console.log("END: " + formatDate(end,"-"));
+										}
                                        return {models: kendo.stringify(options.models)};
                                    }
                                }							   
@@ -124,8 +166,8 @@ function showUsersGrid(){
                                    id: "idShifts",
                                    fields: {
                                        idShifts: { editable: false, nullable: true },
-                                       start: { validation: { required: true } },
-                                       end: { validation: { required: true} }
+                                       start: { type: "date", format: "{0:yyyy-MM-dd}" ,validation: { required: true } },
+                                       end: {	type: "date", format: "{0:yyyy-MM-dd}",  validation: { required: true} }
                                    }
                                }
                            }
@@ -135,7 +177,7 @@ function showUsersGrid(){
                         dataSource: datasource,
 						change: onShiftsChange,
 						selectable: "multiple",
-                        height: 600,
+                        height: 800,
                         sortable: true,
                         pageable: true,	
 						navigatable: true,
@@ -145,13 +187,13 @@ function showUsersGrid(){
 							{ 
 								field:"start", 
 								title:"Start", 
-								format: "{0:MM-dd-yyyy}", 
+								format: "{0:dd/MM/yyyy}", 
 								editor: dateTimeEditor
 							},
 							{
 								field:"end", 
 								title:"End", 
-								format: "{0:MM-dd-yyyy}" ,
+								format: "{0:dd/MM/yyyy}" ,
 								editor: dateTimeEditor
 							}
                         ],
@@ -163,7 +205,7 @@ function showUsersGrid(){
 				    $('<input data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field + '" data-format="' + options.format + '"/>')
 			            .appendTo(container)
 			            .kendoDatePicker({
-							format: 'MM-dd-yyyy',
+							format: 'yyyy-MM-dd',
 					});
 			}
 
@@ -178,7 +220,6 @@ function showUsersGrid(){
 			}
 
             function detailInitShifts(e) {
-					var crudServiceBaseUrl = "http://localhost/ManageEmp/";
 					var idShift = e["data"]["idShifts"];
 					if(DEBUG)
 						console.log("Shift part of shift id: " + idShift + " is opened");
@@ -190,22 +231,30 @@ function showUsersGrid(){
 									dataType: "jsonp"
                                },
                                update: {
-                                   url:  crudServiceBaseUrl + "asdasd.php",
+                                   url:  crudServiceBaseUrl + "update_shiftpart.php?shiftId=" + idShift,
                                    dataType: "jsonp"
                                },
                                destroy: {
-                                   url: crudServiceBaseUrl ,
+                                   url: crudServiceBaseUrl + "asdad.php" ,
                                    dataType: "jsonp"
                                },
                                create: {
-                                   url: crudServiceBaseUrl + 'create_shiftpart.php',
+                                   url: crudServiceBaseUrl + 'create_shiftpart.php?shiftId=' + idShift,
                                    dataType: "jsonp"
                                },
 								parameterMap: function(options, operation) {
                                    if (operation !== "read" && options.models) {
+								   
+											var users = $("#userDdl").data("kendoDropDownList");
+											var roles = $("#roleDdl").data("kendoDropDownList");
+											
+											
 											options.models[0]["idShifts"] = idShift;
-											options.models[0]["idRoles"] = $("#roleID").val();
-											options.models[0]["idUsers"] = $("#userID").val();
+											options.models[0]["idRoles"] = roles.dataItem()['RoleID'];
+											options.models[0]["idUsers"] = users.dataItem()['idUsers'];
+											
+											console.log("UPDATE PARTS: ");
+											console.log(roles.dataItem()['RoleID']);
                                        return {models: kendo.stringify(options.models)};
                                    }
                                }							   
@@ -217,7 +266,8 @@ function showUsersGrid(){
 								   id: "idShifts",
 								   fields:{
 									idUsers:{},
-									idRoles:{}
+									idRoles:{},
+									shiftPartId:{}
 								   }
                                }
                            }
@@ -276,10 +326,6 @@ function showUsersGrid(){
         			var currentDataItem = grid.dataItem(this.select());
 					if(DEBUG)
 						console.log(currentDataItem);
-        			//assign values of the row selected 
-        			/*var start = currentDataItem.start;
-        			var end	= currentDataItem.end;
-					console.log("From: " + start + " , To: " + end);*/
 				}
 				
 				$(document).ready(function() {
@@ -290,7 +336,7 @@ function showUsersGrid(){
                             transport: {
                                 read: {
                                     dataType: "jsonp",
-                                    url: "http://my.jce.ac.il/~noamtz/web/get_roles.php",
+                                    url: crudServiceBaseUrl + "get_roles.php",
                                 }
                             }
                         }

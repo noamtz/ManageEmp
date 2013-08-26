@@ -9,7 +9,7 @@
 			
 			include 'conn.php';
 	
-			$query = sprintf("INSERT INTO Application(password, role, Users_email, passwordSalt) 
+			$query = sprintf("INSERT INTO application(password, role, Users_email, passwordSalt) 
 							  VALUES('%s','%s','%s','pslt')", $encPass, $role, $username);
 
 			if(!mysqli_query($con,$query)){
@@ -19,14 +19,13 @@
 
 		function logon($username, $password, $target){
 			include 'conn.php';
-			
 			$username = stripslashes($username);
 			$password = stripslashes($password);
-			$username = mysql_real_escape_string($username);
-			$password = mysql_real_escape_string($password);
+			$username = mysqli_real_escape_string($con,$username);
+			$password = mysqli_real_escape_string($con,$password);
 			
 			$query = sprintf("SELECT * 
-					  		  FROM Application
+					  		  FROM application
 					  		  WHERE Users_email = '%s' AND password = '%s'",$username , $this->encrypt($password));			
 
 			$result = mysqli_query($con,$query);
@@ -37,6 +36,7 @@
 			$count=mysqli_num_rows($result);
 			
 			if($count == 1){
+				session_start();
 				$_SESSION["username"] = $username;
 				//$_SESSION["password"] = $this->encrypt($password);
 				header(sprintf("location:%s", $target));
@@ -44,13 +44,22 @@
 			else
 				echo "Invalid password " . $password;
 		}
+		
+		function logout($target){
+			session_start();
+			session_destroy();
+			header(sprintf("location:%s", $target));
+		}
 	}
-	print_r(_session);
-	$login = new Login();
-	//$login->register("noa@fds.sdf","123456","user");
+	$action = $_GET["q"];
 	
-	//$login->logon($_POST['username'],$_POST['password'],"index.php");
-	$login->logon('noa@fds.sdf','123456',"index.php");
+	$login = new Login();
+	//$login->register("noam@gmail.com","123456","user");
+	
+	if($action == 'login')
+		$login->logon($_POST['username'],$_POST['password'],"index.php");
+	else if($action == 'logout')
+		$login->logout("login.html");
 ?>
 
 

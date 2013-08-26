@@ -14,5 +14,5 @@ include 'dal.php';
 $dal = new DAL();
 $dal->updateUsers($data);
 
-echo $callback . "(" . $model . ")";
+echo sprintf('%s(%s)',$callback, $model);
 ?>

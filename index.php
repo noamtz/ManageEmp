@@ -14,7 +14,8 @@ if(!isset($_SESSION['username']) ){
    <link href="kendoui/styles/kendo.common.min.css" rel="stylesheet">
    <link href="kendoui/styles/kendo.default.min.css" rel="stylesheet">
 	
-   <script src="kendoui/js/jquery.min.js"></script>
+  <!-- <script src="kendoui/js/jquery.min.js"></script> -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
    <script src="kendoui/js/kendo.web.min.js"></script>
    <script src="kendoui/examples/content/shared/js/console.js"></script>
    
@@ -28,7 +29,11 @@ if(!isset($_SESSION['username']) ){
 
    <div id="content_wrapper">
    
-		<div id="header"></div>
+		<div id="header">
+			<span><?php echo $_SESSION['username']; ?> <span>
+			<a href='login.php?q=logout'>logout</a>
+			
+		</div>
 
 		<div id="left-pane">
 			<h2 class="head-line"> Navigation </h2>
@@ -81,7 +86,7 @@ if(!isset($_SESSION['username']) ){
 			</div>	
 			<!-- drop down list editor for field: "roles" -->
 			<div data-container-for="role" class="k-edit-field">
-			<input name="role" 
+			<input name="role" id="uroleMS"
 				data-bind="value:RoleName" 
 				data-value-field="RoleID" 
 				data-text-field="RoleName" 
@@ -98,7 +103,7 @@ if(!isset($_SESSION['username']) ){
 				</div>	
 				<!-- drop down list editor for field: "roles" -->
 				<div data-container-for="name" class="k-edit-field">
-				<input name="name" 
+				<input name="name" id="userDdl"
 					data-bind="value:uname" 
 					data-value-field="name" 
 					data-text-field="name"
@@ -113,7 +118,7 @@ if(!isset($_SESSION['username']) ){
 				</div>	
 				<!-- drop down list editor for field: "roles" -->
 				<div data-container-for="role" class="k-edit-field">
-				<input name="role" id="sdfsf"
+				<input name="role" id="roleDdl"
 					data-bind="value: urole" 
 					data-value-field="RoleName" 
 					data-text-field="RoleName"
