@@ -9,7 +9,7 @@
 			
 			include 'conn.php';
 	
-			$query = sprintf("INSERT INTO application(password, role, Users_email, passwordSalt) 
+			$query = sprintf("INSERT INTO application(password, role, userEmail, passwordSalt) 
 							  VALUES('%s','%s','%s','pslt')", $encPass, $role, $username);
 
 			if(!mysqli_query($con,$query)){
@@ -26,7 +26,7 @@
 			
 			$query = sprintf("SELECT * 
 					  		  FROM application
-					  		  WHERE Users_email = '%s' AND password = '%s'",$username , $this->encrypt($password));			
+					  		  WHERE userEmail = '%s' AND password = '%s'",$username , $this->encrypt($password));			
 
 			$result = mysqli_query($con,$query);
 			//DEBUG
@@ -54,7 +54,7 @@
 	$action = $_GET["q"];
 	
 	$login = new Login();
-	//$login->register("noam@gmail.com","123456","user");
+	$login->register("noam@gmail.com","123456","user");
 	
 	if($action == 'login')
 		$login->logon($_POST['username'],$_POST['password'],"index.php");
