@@ -287,20 +287,19 @@ li{
 	
                     $("#get").click(function() {
                         alert('Thank you! Your Choice is:\n\nMonth ID: '+month.value() + '\n\nMonth Text: '+month.text());
-                        
-                        
-                        
-                          $("#monthpicker").kendoDatePicker({
-                    // defines the start view
-                    start: "year",
-
-                    // defines when the calendar should return date
-                    depth: "year",
-
-                    // display month and year in the input
-                    format: "MMMM yyyy"
-                });
                     });
+                    
+                    
+                      $("#monthpicker").kendoDatePicker({
+                	   // defines the start view
+                	    start: "year",
+	
+        		    // defines when the calendar should return date
+        		    depth: "year",
+
+                            // display month and year in the input
+                	    format: "MMMM yyyy"
+        		 });
                 });
 	</script>
 </div>
