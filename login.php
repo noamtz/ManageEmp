@@ -54,7 +54,7 @@
 	$action = $_GET["q"];
 	
 	$login = new Login();
-	$login->register("noam@gmail.com","123456","user");
+	//$login->register("noam@gmail.com","123456","user");
 	
 	if($action == 'login')
 		$login->logon($_POST['username'],$_POST['password'],"index.php");
