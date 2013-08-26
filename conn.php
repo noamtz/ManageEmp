@@ -1,6 +1,6 @@
 <?php
 
-$con=mysqli_connect("localhost","root","noam","managedb");
+$con=mysqli_connect("ip","username","password","dbname");
 
 // Check connection
 if (mysqli_connect_errno())
