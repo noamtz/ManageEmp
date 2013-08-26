@@ -94,6 +94,10 @@ li{
 	            		<h3>Month</h3>
 	          			  <input id="month" value="1" />
 	          			  <button class="k-button" id="get">Choose</button>
+	          			  
+	        		 <div style="margin-top: 59px; margin-left: 180px">
+                    			<input id="monthpicker" value="November 2011" style="width:150px" />
+                		</div>
 	         	 </div>			
 	      </div>
 	</div> <!-- end of option area --> 
@@ -258,7 +262,7 @@ li{
                         { text: "February", value: "2" },
                         { text: "March", value: "3" }
                     ];
-
+		
                     // create DropDownList from input HTML element
                     $("#month").kendoDropDownList({
                         dataTextField: "text",
@@ -283,6 +287,19 @@ li{
 	
                     $("#get").click(function() {
                         alert('Thank you! Your Choice is:\n\nMonth ID: '+month.value() + '\n\nMonth Text: '+month.text());
+                        
+                        
+                        
+                          $("#monthpicker").kendoDatePicker({
+                    // defines the start view
+                    start: "year",
+
+                    // defines when the calendar should return date
+                    depth: "year",
+
+                    // display month and year in the input
+                    format: "MMMM yyyy"
+                });
                     });
                 });
 	</script>
