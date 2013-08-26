@@ -5,7 +5,7 @@
 	include 'dal.php';
 	
 	$dal = new DAL();
-		
-	echo sprintf('%s(%s)',$callback,$dal->getShifts());
+	$shifts = $dal->getShifts();
+	echo sprintf('%s(%s)',$callback,json_encode($shifts));
 
 ?>

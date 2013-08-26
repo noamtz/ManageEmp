@@ -113,7 +113,8 @@ class DAL{
 		while($row = mysqli_fetch_object($rs)){
 			array_push($items, $row);
 		}
-		return json_encode($items);
+		
+		return $items;
 	}
 	
 	function updateShifts($data){

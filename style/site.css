@@ -13,13 +13,13 @@
  }
 #left-pane {
     width: 20%;
-    height: 800px;
+    height: 750px;
 	float:left;
     border: groove;
  }
 #central-pane {
     width: 78%;
-    height: 800px;
+    height: 750px;
     float:left;
     border: groove;
 	margin:auto;

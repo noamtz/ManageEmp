@@ -46,3 +46,10 @@ INSERT INTO `managedb`.`users_has_roles` (`userEmail`, `idRoles`) VALUES ('avi@g
 INSERT INTO `managedb`.`users_has_roles` (`userEmail`, `idRoles`) VALUES ('avi@gmail.com', '2');
 
 INSERT INTO `managedb`.`users_has_roles` (`userEmail`, `idRoles`) VALUES ('reut@gmail.com', '5');
+
+-- -----------------------------------------------------
+-- Create application entry
+-- -----------------------------------------------------
+
+INSERT INTO `managedb`.`application` (`idApplication`, `password`, `passwordSalt`, `role`, `userEmail`) 
+VALUES (NULL, '7c4a8d09ca3762af61e59520943dc26494f8941b', 'pslt', 'user', 'noam@gmail.com');
