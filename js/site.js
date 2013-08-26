@@ -1,5 +1,5 @@
    var DEBUG = false;	
-   var crudServiceBaseUrl = "http://localhost/ManageEmp/"
+   var crudServiceBaseUrl = "http://79.183.175.6/ManageEmp/"
    
 function twoDigits(d) {
     if(0 <= d && d < 10) return "0" + d.toString();
