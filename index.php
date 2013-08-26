@@ -149,7 +149,7 @@ if(!isset($_SESSION['username']) ){
 			var dropDownDataSource = new kendo.data.DataSource({
 				transport: {
 					read: {
-							url: 'http://localhost/ManageEmp/get_roles.php',
+							url: 'http://79.183.175.6/ManageEmp/get_roles.php',
 						dataType: "jsonp"
 					}
 				}
@@ -157,7 +157,7 @@ if(!isset($_SESSION['username']) ){
 			var autoComplete = new kendo.data.DataSource({
 				transport: {
 					read: {
-						url: 'http://localhost/ManageEmp/users_names.php',
+						url: 'http://79.183.175.6/ManageEmp/users_names.php',
 						dataType: "jsonp"
 					}
 				}
