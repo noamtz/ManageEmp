@@ -1,9 +1,9 @@
-var crudServiceBaseUrl = "http://localhost:8088/ManageEmp/"
+var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/ManageEmp/"
 			function showShiftSelection(){
 				$( "#grid-place" ).append
 			}
 
-			function showGrid(type){
+			function showGrid(type,params){
 				$(document).ready(function () {
 					if($("#grid-wrapper").length > 0){
 						$("#grid-wrapper").remove();
@@ -14,15 +14,14 @@ var crudServiceBaseUrl = "http://localhost:8088/ManageEmp/"
 						showUsersGrid();
 						$('#options-place').toggle();
 					}else if(type == 'shifts'){
-						showShiftsGrid();
+						showShiftsGrid(params);
 					}
 				});
 			}
 	
 			function showUsersGrid(){
 				$(document).ready(function () {					
-                   var crudServiceBaseUrl = "http://localhost:8088/ManageEmp/",
-                       dataSource = new kendo.data.DataSource({
+                       var dataSource = new kendo.data.DataSource({
                            transport: {
                                read:  {
                                    url: crudServiceBaseUrl + 'get_users.php',
@@ -78,12 +77,17 @@ var crudServiceBaseUrl = "http://localhost:8088/ManageEmp/"
                });
 			}	
 
-			function showShiftsGrid(){
+			function showShiftsGrid(params){
+				var get_params = "";
+				if(params != null){
+					get_params = "?from=" + params[0] + "&to=" + params[1];
+				}
+					
 				 $(document).ready(function () {					
                     var dataSource = new kendo.data.DataSource({
                            transport: {
                                read:  {
-                                   url: crudServiceBaseUrl + "get_shifts.php",
+                                   url: crudServiceBaseUrl + "get_shifts.php" + get_params,
 								   dataType: "jsonp"
 
                                },
@@ -115,7 +119,7 @@ var crudServiceBaseUrl = "http://localhost:8088/ManageEmp/"
                        dataSource: dataSource,
                        navigatable: true,
                        pageable: true,
-					   height: 365,
+					   height: 630,
 					   sortable: true,
                        toolbar: ["save", "cancel"],
                         columns: [
@@ -146,9 +150,10 @@ var crudServiceBaseUrl = "http://localhost:8088/ManageEmp/"
                    });
                });
 			}	
-			//Drop down list
+			
+			function initDatesPicker(){
 			 $(document).ready(function() {
-                    $("#monthpicker-from").kendoDatePicker({
+				$("#monthpicker-from").kendoDatePicker({
 						// defines the start view
                 	    start: "year",
 	
@@ -169,11 +174,9 @@ var crudServiceBaseUrl = "http://localhost:8088/ManageEmp/"
 						// display month and year in the input
 						format: "MMMM yyyy"
         		 }).attr("readonly", true);
-				 
-				 //Pop up messages
-				 
-				 //messageBox("This is my custom massege", "Message Dialog");
-                });
+			 });
+			}
+               
 				
 				function messageBox(msg, title){
 					$("#window").kendoWindow({
@@ -196,7 +199,16 @@ var crudServiceBaseUrl = "http://localhost:8088/ManageEmp/"
 				function selectRange(){
 					var from =  new Date($("#monthpicker-from").data("kendoDatePicker").value());
 					var to =  new Date($("#monthpicker-to").data("kendoDatePicker").value());
-					messageBox("from: " + from.getFullYear() + " to: " + to.getDate(),"");
+					if(to <= from){
+						messageBox("Please insert valid date range","Message");
+					}else{
+						from = formatDate(from,"-");
+						to = formatDate(to,"-");
+						//messageBox("from: " + from + " to: " + to,"");
+						var params=[from, to];
+						showGrid('shifts',params);
+					}
+					
 				}
 				function twoDigits(d) {
 					if(0 <= d && d < 10) return "0" + d.toString();
@@ -207,3 +219,24 @@ var crudServiceBaseUrl = "http://localhost:8088/ManageEmp/"
 				function formatDate(date, sep){
 					return twoDigits(date.getFullYear() + sep + twoDigits(date.getMonth()+1) + sep + twoDigits(date.getDate()) );
 				}   
+				
+				function manageShifts(){
+					var options =
+								  '<div id="cap-view" class="demo-section">'
+								+ '<div id="cap" class="black-cap"></div>'
+								+ '<div id="options">'
+								+ '<h3>Select Month</h3>'
+								+ '<label for="monthpicker-from">From: </label>'
+								+ '<input id="monthpicker-from" value="January 2013" style="width:150px" />'
+								+ '<label for="monthpicker-to">To: </label>'
+								+ '<input id="monthpicker-to" value="December 2013" style="width:150px" />'
+								+ '<button class="k-button" onclick="selectRange()">Choose</button>'
+								+ '</div>'
+								+ '</div>';
+					
+					
+					if($("#options").length == 0){
+						$("#options-place").append(options);
+						initDatesPicker();
+					}
+				}

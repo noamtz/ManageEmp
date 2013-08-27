@@ -36,7 +36,7 @@ if(!isset($_SESSION['username']) ){
 
 	<ul>
 	    <li><a class="k-button nav-button" href="javascript:void(0)" onclick="showGrid('users')">Edit Details</a></li>
-  	    <li><a class="k-button nav-button" href="javascript:void(0)" onclick="showGrid('shifts')">Manage Shifts</a></li>
+  	    <li><a class="k-button nav-button" href="javascript:void(0)" onclick="manageShifts()">Manage Shifts</a></li>
     	<li><a class="k-button nav-button" href="#">Contact</a></li>
 	</ul>
 
@@ -46,7 +46,7 @@ if(!isset($_SESSION['username']) ){
 	<div id="central-pane">
 
 	   <div id="options-place">
-			
+			<!--
 	       <div id="cap-view" class="demo-section">
 
 	            <div id="cap" class="black-cap"></div>
@@ -54,12 +54,13 @@ if(!isset($_SESSION['username']) ){
 	            <div id="options">
 	            	<h3>Select Month</h3>
 					<label for="monthpicker-from">From: </label>
-                    <input id="monthpicker-from" value="November 2011" style="width:150px" />
+                    <input id="monthpicker-from" value="January 2013" style="width:150px" />
 					<label for="monthpicker-to">To: </label>
-                    <input id="monthpicker-to" value="November 2011" style="width:150px" />
+                    <input id="monthpicker-to" value="December 2013" style="width:150px" />
 					<button class="k-button" onclick="selectRange()">Choose</button>
 	         	 </div>			
 	      </div>
+		  -->
 		</div> <!-- end of option area --> 
 
 		<div id="grid-place"></div>

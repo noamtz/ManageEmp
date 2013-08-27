@@ -144,25 +144,6 @@ if(!isset($_SESSION['username']) ){
 				
 			</div>
 		</script>
-		
-		<script>
-			var dropDownDataSource = new kendo.data.DataSource({
-				transport: {
-					read: {
-							url: 'http://79.183.175.6/ManageEmp/get_roles.php',
-						dataType: "jsonp"
-					}
-				}
-			});
-			var autoComplete = new kendo.data.DataSource({
-				transport: {
-					read: {
-						url: 'http://79.183.175.6/ManageEmp/users_names.php',
-						dataType: "jsonp"
-					}
-				}
-			});
-		</script>
 
 </body>
 </html>

@@ -105,10 +105,16 @@ class DAL{
 		return json_encode($result);
 	}
 
-	function getShifts(){
+	function getShifts($from, $to){
 		include 'conn.php';
-		$rs = mysqli_query($con,"SELECT *
-								 FROM shifts");	
+		
+		$query = "SELECT *
+				 FROM shifts";
+		if(isset($from) && isset($to))
+			$query = sprintf("%s WHERE start AND end BETWEEN '%s' AND '%s'", $query, $from, $to);
+		
+		$rs = mysqli_query($con,$query);	
+		
 		$items = array();
 		while($row = mysqli_fetch_object($rs)){
 			array_push($items, $row);

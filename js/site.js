@@ -1,5 +1,22 @@
    var DEBUG = false;	
-   var crudServiceBaseUrl = "http://79.183.175.6/ManageEmp/"
+   var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/ManageEmp/";
+   
+   	var dropDownDataSource = new kendo.data.DataSource({
+				transport: {
+					read: {
+							url: crudServiceBaseUrl + 'get_roles.php',
+						dataType: "jsonp"
+					}
+				}
+			});
+	var autoComplete = new kendo.data.DataSource({
+				transport: {
+					read: {
+						url: crudServiceBaseUrl + 'users_names.php',
+						dataType: "jsonp"
+					}
+				}
+			});
    
 function twoDigits(d) {
     if(0 <= d && d < 10) return "0" + d.toString();
