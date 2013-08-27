@@ -22,7 +22,7 @@
     height: 750px;
     float:left;
     border: groove;
-	margin:auto;
+	margin-left:5px;
  }
 #footer {
     width: auto;
@@ -46,7 +46,6 @@ li{
 	text-align: center;
 }
 
-#grid-wrapper{
-	height: auto;
+#options-place{
 	//display: none;
 }

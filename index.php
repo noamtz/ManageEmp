@@ -48,7 +48,7 @@ if(!isset($_SESSION['username']) ){
 		<div id="central-pane"></div>
 	
 		<div id="footer">
-			 <input id="products" style="width: 250px" />
+			
 		</div>
 		
 	</div>

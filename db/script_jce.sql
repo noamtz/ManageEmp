@@ -2,16 +2,16 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-DROP SCHEMA IF EXISTS `managedb` ;
-CREATE SCHEMA IF NOT EXISTS `managedb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `managedb` ;
+DROP SCHEMA IF EXISTS `noamtz` ;
+CREATE SCHEMA IF NOT EXISTS `noamtz` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `noamtz` ;
 
 -- -----------------------------------------------------
--- Table `managedb`.`users`
+-- Table `noamtz`.`users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `managedb`.`users` ;
+DROP TABLE IF EXISTS `noamtz`.`users` ;
 
-CREATE  TABLE IF NOT EXISTS `managedb`.`users` (
+CREATE  TABLE IF NOT EXISTS `noamtz`.`users` (
   `idUsers` INT NOT NULL AUTO_INCREMENT ,
   `email` VARCHAR(100) NOT NULL ,
   `firstname` VARCHAR(45) NOT NULL ,
@@ -23,11 +23,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `managedb`.`roles`
+-- Table `noamtz`.`roles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `managedb`.`roles` ;
+DROP TABLE IF EXISTS `noamtz`.`roles` ;
 
-CREATE  TABLE IF NOT EXISTS `managedb`.`roles` (
+CREATE  TABLE IF NOT EXISTS `noamtz`.`roles` (
   `idRoles` INT NOT NULL AUTO_INCREMENT ,
   `type` VARCHAR(45) NOT NULL ,
   PRIMARY KEY (`idRoles`) )
@@ -35,11 +35,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `managedb`.`shifts`
+-- Table `noamtz`.`shifts`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `managedb`.`shifts` ;
+DROP TABLE IF EXISTS `noamtz`.`shifts` ;
 
-CREATE  TABLE IF NOT EXISTS `managedb`.`shifts` (
+CREATE  TABLE IF NOT EXISTS `noamtz`.`shifts` (
   `idShifts` INT NOT NULL AUTO_INCREMENT ,
   `start` DATE NOT NULL ,
   `end` DATE NOT NULL ,
@@ -48,11 +48,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `managedb`.`application`
+-- Table `noamtz`.`application`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `managedb`.`application` ;
+DROP TABLE IF EXISTS `noamtz`.`application` ;
 
-CREATE  TABLE IF NOT EXISTS `managedb`.`application` (
+CREATE  TABLE IF NOT EXISTS `noamtz`.`application` (
   `idApplication` INT NOT NULL AUTO_INCREMENT ,
   `password` VARCHAR(200) NOT NULL ,
   `passwordSalt` VARCHAR(200) NOT NULL ,
@@ -62,18 +62,18 @@ CREATE  TABLE IF NOT EXISTS `managedb`.`application` (
   INDEX `fk_Application_Users1_idx` (`userEmail` ASC) ,
   CONSTRAINT `fk_Application_Users1`
     FOREIGN KEY (`userEmail` )
-    REFERENCES `managedb`.`users` (`email` )
+    REFERENCES `noamtz`.`users` (`email` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `managedb`.`users_has_roles`
+-- Table `noamtz`.`users_has_roles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `managedb`.`users_has_roles` ;
+DROP TABLE IF EXISTS `noamtz`.`users_has_roles` ;
 
-CREATE  TABLE IF NOT EXISTS `managedb`.`users_has_roles` (
+CREATE  TABLE IF NOT EXISTS `noamtz`.`users_has_roles` (
   `userEmail` VARCHAR(100) NOT NULL ,
   `idRoles` INT NOT NULL ,
   PRIMARY KEY (`userEmail`, `idRoles`) ,
@@ -81,23 +81,23 @@ CREATE  TABLE IF NOT EXISTS `managedb`.`users_has_roles` (
   INDEX `fk_Users_has_Roles_Users_idx` (`userEmail` ASC) ,
   CONSTRAINT `fk_Users_has_Roles_Users`
     FOREIGN KEY (`userEmail` )
-    REFERENCES `managedb`.`users` (`email` )
+    REFERENCES `noamtz`.`users` (`email` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Users_has_Roles_Roles1`
     FOREIGN KEY (`idRoles` )
-    REFERENCES `managedb`.`roles` (`idRoles` )
+    REFERENCES `noamtz`.`roles` (`idRoles` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `managedb`.`shiftPart`
+-- Table `noamtz`.`shiftPart`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `managedb`.`shiftPart` ;
+DROP TABLE IF EXISTS `noamtz`.`shiftPart` ;
 
-CREATE  TABLE IF NOT EXISTS `managedb`.`shiftPart` (
+CREATE  TABLE IF NOT EXISTS `noamtz`.`shiftPart` (
   `userEmail` VARCHAR(100) NOT NULL ,
   `idRoles` INT NOT NULL ,
   `idShifts` INT NOT NULL ,
@@ -108,22 +108,22 @@ CREATE  TABLE IF NOT EXISTS `managedb`.`shiftPart` (
   PRIMARY KEY (`shiftPartId`) ,
   CONSTRAINT `fk_ShiftPart_Users1`
     FOREIGN KEY (`userEmail` )
-    REFERENCES `managedb`.`users` (`email` )
+    REFERENCES `noamtz`.`users` (`email` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_ShiftPart_Roles1`
     FOREIGN KEY (`idRoles` )
-    REFERENCES `managedb`.`roles` (`idRoles` )
+    REFERENCES `noamtz`.`roles` (`idRoles` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_aa_Shifts1`
     FOREIGN KEY (`idShifts` )
-    REFERENCES `managedb`.`shifts` (`idShifts` )
+    REFERENCES `noamtz`.`shifts` (`idShifts` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-USE `managedb` ;
+USE `noamtz` ;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
