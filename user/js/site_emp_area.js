@@ -1,4 +1,5 @@
-var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/ManageEmp/"
+var crudServiceBaseUrl = "http://localhost/ManageEmp/";
+var gridSize = 365;
 			function showShiftSelection(){
 				$( "#grid-place" ).append
 			}
@@ -54,7 +55,7 @@ var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/ManageEmp/"
                        dataSource: dataSource,
                        navigatable: true,
                        pageable: true,
-					   height: 365,
+					   height: gridSize,
 					   sortable: true,
                        columns: [
                            { field: "email", title: "Email"},
@@ -109,7 +110,8 @@ var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/ManageEmp/"
                                    fields: {
                                        idShifts: { editable: false, nullable: true },
                                        start: { type: "date", format: "{0:yyyy-MM-dd}" ,validation: { required: true } },
-                                       end: {	type: "date", format: "{0:yyyy-MM-dd}",  validation: { required: true} }
+                                       end: {	type: "date", format: "{0:yyyy-MM-dd}",  validation: { required: true} },
+									   part: { type: "boolean" }
                                    }
                                }
                            }
@@ -122,7 +124,7 @@ var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/ManageEmp/"
 					   height: 630,
 					   sortable: true,
                        toolbar: ["save", "cancel"],
-                        columns: [
+                       columns: [
 							{ 
 								field:"start", 
 								title:"Start", 
@@ -133,8 +135,15 @@ var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/ManageEmp/"
 								title:"End", 
 								format: "{0:dd/MM/yyyy}"
 							}
+							,
+							{
+								field:"part", 
+								title:"Participate",
+								width: 100,
+								template: "<input type=\"checkbox\" />",
+								editable: true
+							}
                         ],
-                       editable: true,
 					   dataBound: function () {
 							//Get the number of Columns in the grid
 							var colCount = $("#grid").find('.k-grid-header colgroup > col').length;
@@ -153,27 +162,23 @@ var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/ManageEmp/"
 			
 			function initDatesPicker(){
 			 $(document).ready(function() {
-				$("#monthpicker-from").kendoDatePicker({
+				var dateToday = new Date();
+				$("#monthpicker-from , #monthpicker-to").kendoDatePicker({
 						// defines the start view
                 	    start: "year",
-	
 						// defines when the calendar should return date
 						depth: "year",
-
 						// display month and year in the input
-						format: "MMMM yyyy"
+						format: "MMMM yyyy",
+						minDate: dateToday,
+						onSelect: function(selectedDate) {
+							var option = this.id == "monthpicker-from" ? "minDate" : "maxDate",
+							instance = $(this).data("datepicker"),
+							date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+							dates.not(this).datepicker("option", option, date);
+						}
         		 }).attr("readonly", true);
 				 
-				 $("#monthpicker-to").kendoDatePicker({
-						// defines the start view
-                	    start: "year",
-	
-						// defines when the calendar should return date
-						depth: "year",
-
-						// display month and year in the input
-						format: "MMMM yyyy"
-        		 }).attr("readonly", true);
 			 });
 			}
                
@@ -199,12 +204,12 @@ var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/ManageEmp/"
 				function selectRange(){
 					var from =  new Date($("#monthpicker-from").data("kendoDatePicker").value());
 					var to =  new Date($("#monthpicker-to").data("kendoDatePicker").value());
-					if(to <= from){
+					if(to < from){
 						messageBox("Please insert valid date range","Message");
 					}else{
 						from = formatDate(from,"-");
 						to = formatDate(to,"-");
-						//messageBox("from: " + from + " to: " + to,"");
+
 						var params=[from, to];
 						showGrid('shifts',params);
 					}
@@ -225,7 +230,7 @@ var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/ManageEmp/"
 								  '<div id="cap-view" class="demo-section">'
 								+ '<div id="cap" class="black-cap"></div>'
 								+ '<div id="options">'
-								+ '<h3>Select Month</h3>'
+								+ '<h3>Select Date Range</h3>'
 								+ '<label for="monthpicker-from">From: </label>'
 								+ '<input id="monthpicker-from" value="January 2013" style="width:150px" />'
 								+ '<label for="monthpicker-to">To: </label>'

@@ -1,6 +1,6 @@
    var DEBUG = false;	
-   var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/ManageEmp/";
-   
+   var crudServiceBaseUrl = "http://localhost/ManageEmp/";
+   var gridSize = 740;
    	var dropDownDataSource = new kendo.data.DataSource({
 				transport: {
 					read: {
@@ -88,7 +88,7 @@ function showUsersGrid(){
 					   selectable: "row",
                        navigatable: true,
                        pageable: true,
-                       height: 800,
+                       height: gridSize,
 					   edit: function(e) {
 							var userId = $(e.container).find("input[name='Email']").val();
 							var userRoles = new kendo.data.DataSource({
@@ -194,7 +194,7 @@ function showShiftsGrid(){
                         dataSource: datasource,
 						change: onShiftsChange,
 						selectable: "multiple",
-                        height: 800,
+                        height: gridSize,
                         sortable: true,
                         pageable: true,	
 						navigatable: true,
