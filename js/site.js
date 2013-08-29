@@ -1,5 +1,5 @@
    var DEBUG = false;	
-   var crudServiceBaseUrl = "http://localhost/ManageEmp/";
+   var crudServiceBaseUrl = "http://localhost:8088/ManageEmp/";
    var gridSize = 740;
    	var dropDownDataSource = new kendo.data.DataSource({
 				transport: {
