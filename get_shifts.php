@@ -15,8 +15,7 @@
 	
 	$dal = new DAL();
 	$shifts = $dal->getShifts($from, $to);
-	$shifts[0]->part = true;
-	$shifts[2]->part = true;
+
 	echo sprintf('%s(%s)',$callback,json_encode($shifts));
 
 ?>

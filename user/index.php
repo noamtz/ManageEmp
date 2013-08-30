@@ -20,7 +20,10 @@ if(!isset($_SESSION['username']) ){
    
    <!-- Custom JS & CSS-->
    <link href="style/style_emp_area.css" rel="stylesheet">
+   
+   <script src="../js/config.js"></script> <!-- HAS TO BE FIRST (becuase the global varialbe) -->
    <script src="js/site_emp_area.js"></script>
+   <script src="../js/utils.js"></script>
    
 
 </head>
