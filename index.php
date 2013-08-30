@@ -4,9 +4,9 @@ if(!isset($_SESSION['username']) ){
 	header("location:login.html");
 }
 ?>
-
 <!DOCTYPE html>
 <html>
+
 <head>
    <title>Manage Guards</title>
 
@@ -22,15 +22,20 @@ if(!isset($_SESSION['username']) ){
    <!-- Custom Style & Scripts-->
    <link href="style/site.css" rel="stylesheet">
    
+   <script src="js/config.js"></script> <!-- HAS TO BE FIRST (becuase the global varialbe) -->
    <script src="js/site.js"></script>
+   <script src="js/utils.js"></script>
 
 </head>
+
 <body>
 
-   <div id="content_wrapper">
-   
-		<div id="header">
-			<span><?php echo $_SESSION['username']; ?> <span>
+    <div
+    id="content_wrapper">
+
+        <div
+        id="header">
+            <span><?php echo $_SESSION['username']; ?> <span>
 			<a href='login.php?q=logout'>logout</a>
 			
 		</div>
@@ -39,8 +44,8 @@ if(!isset($_SESSION['username']) ){
 			<h2 class="head-line"> Navigation </h2>
 
 			<ul>
-				<li><a class="k-button nav-button" href="javascript:void(0)" onclick="showGrid('users')">Users</a></li>
-				<li><a class="k-button nav-button" href="javascript:void(0)" onclick="showGrid('shifts')">Shifts</a></li>
+				<li><a class="k-button nav-button" href="javascript:void(0)" onclick="manageUsers()">Users</a></li>
+				<li><a class="k-button nav-button" href="javascript:void(0)" onclick="manageShifts()">Shifts</a></li>
 				<li><a class="k-button nav-button" href="#">Contact</a></li>
 			</ul>
 		</div>

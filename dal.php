@@ -2,8 +2,6 @@
 
 class DAL{
 
-	
-
 	function getUsers(){
 		include 'conn.php';
 
@@ -15,7 +13,7 @@ class DAL{
 		{
   			array_push($items, $row);
 		}
-		return json_encode($items);
+		return $items;
 	}
 	
 	function getUserRoles($userId){
