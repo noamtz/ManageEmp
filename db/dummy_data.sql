@@ -16,6 +16,9 @@ VALUES ('avi@gmail.com', 'avi', 'levy', '0523449785');
 INSERT INTO `managedb`.`users` (`email`, `firstname`, `lastname`, `phone`)
 VALUES ('reut@gmail.com', 'reut', 'jacob', '0541849343');
 
+INSERT INTO `managedb`.`users` (`email`, `firstname`, `lastname`, `phone`)
+VALUES ('admin@gmail.com', 'administrator', 'admin', '0541849343');
+
 
 -- -----------------------------------------------------
 -- Create roles
@@ -53,3 +56,6 @@ INSERT INTO `managedb`.`users_has_roles` (`userEmail`, `idRoles`) VALUES ('reut@
 
 INSERT INTO `managedb`.`application` (`idApplication`, `password`, `passwordSalt`, `role`, `userEmail`) 
 VALUES (NULL, '7c4a8d09ca3762af61e59520943dc26494f8941b', 'pslt', 'user', 'noam@gmail.com');
+
+INSERT INTO `managedb`.`application` (`idApplication`, `password`, `passwordSalt`, `role`, `userEmail`) 
+VALUES (NULL, '7c4a8d09ca3762af61e59520943dc26494f8941b', 'pslt', 'admin', 'admin@gmail.com');

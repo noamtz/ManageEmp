@@ -319,7 +319,7 @@ function detailInitShifts(e) {
                 dataType: "jsonp"
             },
             destroy: {
-                url: crudServiceBaseUrl + "asdad.php",
+                url: crudServiceBaseUrl + "delete_shiftpart.php",
                 dataType: "jsonp"
             },
             create: {
@@ -328,15 +328,15 @@ function detailInitShifts(e) {
             },
             parameterMap: function (options, operation) {
                 if (operation !== "read" && options.models) {
+					if(operation !== "destroy"){
+						var users = $("#userDdl").data("kendoDropDownList");
+						var roles = $("#roleDdl").data("kendoDropDownList");
 
-                    var users = $("#userDdl").data("kendoDropDownList");
-                    var roles = $("#roleDdl").data("kendoDropDownList");
 
-
-                    options.models[0]["idShifts"] = idShift;
-                    options.models[0]["idRoles"] = roles.dataItem()['RoleID'];
-                    options.models[0]["idUsers"] = users.dataItem()['idUsers'];
-
+						options.models[0]["idShifts"] = idShift;
+						options.models[0]["idRoles"] = roles.dataItem()['RoleID'];
+						options.models[0]["idUsers"] = users.dataItem()['idUsers'];
+					}
 
                     return {
                         models: kendo.stringify(options.models)
@@ -402,7 +402,7 @@ function detailInitShifts(e) {
         }, {
             command: ["edit", "destroy"],
             title: "&nbsp;",
-            width: "172px"
+            width: "100px"
         }],
         editable: {
             mode: "popup",

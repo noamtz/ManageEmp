@@ -3,7 +3,7 @@
 class DAL{
 
 	function getUsers(){
-		getUsers(null);
+		$this->getUser(null);
 	}
 	
 	function getUser($userId){
@@ -255,6 +255,17 @@ class DAL{
 		if(!mysqli_query($con,$query)){
 			printf("dal.updateShiftParts: Error msg: %s\n", $con->error);
 		}		
+	}
+	
+	function deleteShiftPatrs($shiftPartId){
+		include 'conn.php';
+		
+		$query = sprintf("DELETE FROM `shiftpart`  
+						  WHERE shiftPartId='%s'",$shiftPartId) ;
+		
+		if(!mysqli_query($con,$query)){
+			printf("dal.deleteShiftPatrs: Error msg: %s\n", $con->error);
+		}
 	}
 	
 	function handleUserRequests($createReq, $deleteReq){
