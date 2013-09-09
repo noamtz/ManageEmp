@@ -488,6 +488,6 @@ function initDatesPicker() {
         }).attr("readonly", true);
 		
 		$("#monthpicker-to").data("kendoDatePicker").value(new Date());
-		$("#monthpicker-from").data("kendoDatePicker").value(new Date());
+		$("#monthpicker-from").data("kendoDatePicker").value(new Date(2012,0,1));
     });
 }

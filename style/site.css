@@ -2,7 +2,7 @@
 {
     width: 1000px;
     height: auto;
-    border: groove;
+    //border: groove;
 	margin: auto;
 }
 
@@ -23,6 +23,7 @@
     float:left;
     border: groove;
 	margin:auto;
+	margin-left: 8px;
  }
 #footer {
     width: auto;
@@ -49,4 +50,15 @@ li{
 #grid-wrapper{
 	height: auto;
 	//display: none;
+}
+
+#name-area{
+	margin-top:15px;
+	margin-left:5px;
+}
+
+.sfont{
+	font: 15px Georgia, Ariel;
+	color: #A00000 ;
+	padding-top: 10px;
 }

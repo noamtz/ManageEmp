@@ -1,8 +1,15 @@
 <?php
 session_start();
-if(!isset($_SESSION['username']) ){
-	header("location:login.html");
-}
+
+$redirect = "location:../login/login.php";
+$valid = false;
+
+if(array_key_exists('username',$_SESSION))
+	if(array_key_exists('role',$_SESSION))
+		if($_SESSION['role'] == 'user')
+			$valid = true;
+if($valid == false)
+	header($redirect);
 ?>
 
 <!DOCTYPE html>
@@ -30,15 +37,18 @@ if(!isset($_SESSION['username']) ){
 <body>
    <div id="content_wrapper">
 	<div id="header">
-			<span><?php echo $_SESSION['username']; ?> <span>
-			<a href='../login.php?q=logout'>logout</a>
+			<div id="name-area">
+				<input id="user-id" type="hidden" value="<?php echo $_SESSION['username']; ?>"/>
+				<span class="sfont"><?php echo $_SESSION['username']; ?> </span>
+				<a href='../authentication.php?q=logout' class="k-button">logout</a>
+			</div>
 	</div>
 
     <div id="left-pane">
 	<h2 class="head-line"> Navigation </h2>
 
 	<ul>
-	    <li><a class="k-button nav-button" href="javascript:void(0)" onclick="">Edit Details</a></li>
+	    <li><a class="k-button nav-button" href="javascript:void(0)" onclick="editDetails()">Edit Details</a></li>
   	    <li><a class="k-button nav-button" href="javascript:void(0)" onclick="manageShifts()">Manage Shifts</a></li>
     	<li><a class="k-button nav-button" href="browseShifts()">Browse Shifts</a></li>
 	</ul>
@@ -52,6 +62,10 @@ if(!isset($_SESSION['username']) ){
 	
 	<div id="window"></div>
 </div>
+<script>
 
+	
+		
+</script>
 </body>
 </html>

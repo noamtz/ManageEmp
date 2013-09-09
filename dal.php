@@ -3,11 +3,20 @@
 class DAL{
 
 	function getUsers(){
+		getUsers(null);
+	}
+	
+	function getUser($userId){
 		include 'conn.php';
 
-		$result = mysqli_query($con,"SELECT *
-									 FROM users");
-
+		$query = "SELECT *
+				  FROM users";
+		
+		if(isset($userId))
+			$query = $query . " WHERE email = '" . $userId . "'";
+		
+		$result = mysqli_query($con,$query);
+									 
 		$items = array();
 		while($row = mysqli_fetch_object($result))
 		{
@@ -107,7 +116,7 @@ class DAL{
 		include 'conn.php';
 		
 		$query = "SELECT *
-				 FROM shifts";
+				  FROM shifts";
 		if(isset($from) && isset($to))
 			$query = sprintf("%s WHERE start AND end BETWEEN '%s' AND '%s'", $query, $from, $to);
 		
@@ -246,6 +255,99 @@ class DAL{
 		if(!mysqli_query($con,$query)){
 			printf("dal.updateShiftParts: Error msg: %s\n", $con->error);
 		}		
+	}
+	
+	function handleUserRequests($createReq, $deleteReq){
+		if(isset($createReq)){
+			$cols = array("idShifts", "userEmail", "request_time");
+			$this->insert_statement("shift_request", $cols, $createReq, null);
+		}
+		if(isset($deleteReq)){
+			$cols = array("idShifts" , "userEmail");
+			$this->delete_statement("shift_request", $cols, $deleteReq);
+		}
+	}
+	
+	function getUserRequest($email , $from, $to){
+		include 'conn.php';
+		$query = "SELECT *
+				  FROM shift_request
+				  WHERE userEmail = '" . $email . "'";
+				  
+		$result = mysqli_query($con,$query);
+		$request = array();
+		
+		while($row = mysqli_fetch_object($result))
+  			array_push($request, $row);
+			
+		$shifts = $this->getShifts($from, $to);
+		
+		for($i=0; $i<count($request); $i++){
+			for($j=0; $j<count($shifts); $j++){
+				if($request[$i]->idShifts == $shifts[$j]->idShifts){
+					 $shifts[$j]->part = true;
+				}
+			}
+		}
+		return $shifts;
+	}
+	
+	function delete_statement($table, $cols, $values){
+		include 'conn.php';
+		if(is_array($values)){
+			if(is_array($values[0])){
+				for($i=0; $i<count($values);$i++){
+					$val = $values[$i];
+					$values[$i] = "('" . implode("', '",$val) . "')";
+				}
+				$values = "(" . implode(", ", $values) . ")";
+			}
+			else
+				$values = "('" . implode("', '", $values) . "')";
+		}
+		if(is_array($cols))
+			$cols = "(" . implode(", ", $cols) . ")";
+		$query = sprintf("DELETE FROM %s WHERE %s IN %s", $table, $cols, $values);
+		
+		if(!mysqli_query($con, $query)){
+			printf("dal.delete_statement: Error msg: %s\n", $con->error);
+			echo $query;
+		}
+		
+	}
+	
+	function insert_statement($table, $cols, $values , $where){
+		include 'conn.php';
+		//cheking if we in single insert or multiple
+		//by cheking if the first element is an array
+		if(is_array($values[0]))
+			$query = $this->insertMultipleRows($table, $cols, $values , $where);
+		else
+			$query = $this->insertSingleRow($table, $cols, $values , $where);
+		
+		if(!mysqli_query($con,$query)){
+			printf("dal.insert_statement: Error msg: %s\n", $con->error);
+		}
+	}
+	
+	function insertSingleRow($table, $cols, $values , $where){
+		$values = "'" . implode("', '",$values) . "'" ;
+		return sprintf("INSERT INTO %s(%s) VALUES (%s)", $table, implode(", ",$cols) , $values);
+	}
+	
+	function insertMultipleRows($table, $cols, $vals , $where){
+		
+		for($i=0; $i<count($vals); $i++) {
+			$value = $vals[$i];
+			$vals[$i] = "('" . implode("', '",$value) . "')";
+		}
+		
+		$query = sprintf("INSERT INTO %s(%s) VALUES %s", $table, implode(", ",$cols) , implode(", ",$vals));
+		
+		if(isset($where))
+			$query = $query . " WHERE " . $where;
+			
+		return $query;
 	}
 }
 ?>

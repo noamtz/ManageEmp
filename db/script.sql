@@ -123,6 +123,32 @@ CREATE  TABLE IF NOT EXISTS `managedb`.`shiftPart` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `managedb`.`shift_request`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `managedb`.`shift_request` ;
+
+CREATE  TABLE IF NOT EXISTS `managedb`.`shift_request` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `idShifts` INT NOT NULL ,
+  `userEmail` VARCHAR(100) NOT NULL ,
+  `request_time` BIGINT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_shift_request_shifts1_idx` (`idShifts` ASC) ,
+  INDEX `fk_shift_request_users1_idx` (`userEmail` ASC) ,
+  CONSTRAINT `fk_shift_request_shifts1`
+    FOREIGN KEY (`idShifts` )
+    REFERENCES `managedb`.`shifts` (`idShifts` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_shift_request_users1`
+    FOREIGN KEY (`userEmail` )
+    REFERENCES `managedb`.`users` (`email` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 USE `managedb` ;
 
 

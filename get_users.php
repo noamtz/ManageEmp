@@ -5,8 +5,14 @@
 		die('Missing parameters');
 	include 'dal.php';
 
+	if(array_key_exists('userId',$_REQUEST))
+		$userId = $_REQUEST['userId'];
+	
 	header('Content-type: application/x-javascript; charset=utf-8');
 	$dal = new DAL();
-	$result = $dal->getUsers();
+	if(isset($userId))
+		$result = $dal->getUser($userId);
+	else
+		$result = $dal->getUsers();
 	echo sprintf("%s(%s)", $callback, json_encode($result));
 ?>

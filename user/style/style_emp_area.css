@@ -2,7 +2,7 @@
 {
     width: 1000px;
     height: auto;
-    border: groove;
+    //border: groove;
 	margin: auto;
 }
 
@@ -22,7 +22,7 @@
     height: 750px;
     float:left;
     border: groove;
-	margin-left:5px;
+	margin-left:7px;
  }
 #footer {
     width: auto;
@@ -49,3 +49,66 @@ li{
 #options-place{
 	//display: none;
 }
+
+#name-area{
+	margin-top:15px;
+	margin-left:5px;
+}
+
+.sfont{
+	font: 15px Georgia, Ariel;
+	color: #A00000 ;
+	padding-top: 10px;
+}
+
+// USER DETAILS
+
+ .details h3 {
+    font-size: 2.5em;
+    color: #787878;
+    border-bottom: 1px solid #ccc;
+}
+
+        .details {
+            float: left;
+            clear: left;
+            width: 370px;
+            height: 180px;
+            margin: 75px 0 0 150px;
+            padding-top: 10px;
+          
+			border: 1px solid #aaa;
+        }
+
+        .details ul {
+        	list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .details li {
+        	height: 28px;
+        	vertical-align: middle;
+        	color: #000;
+        }
+
+        .details ul label {
+        	display: inline-block;
+        	width: 100px;
+        	text-align: right;
+        	padding-right: 5px;
+        	color: #000;
+        }
+
+        .details label {
+        	color: #000;
+        }
+
+        .details ul input {
+        	border: 1px solid #ddd;
+        }
+
+        .details button {
+        	float: right;
+        	margin-right: 20px;
+        }

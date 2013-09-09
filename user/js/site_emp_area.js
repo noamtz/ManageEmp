@@ -3,22 +3,29 @@ var gridSize = 365;
 function showShiftsGrid(params) {
     var get_params = "";
     if (params != null) {
-        get_params = "?from=" + params[0] + "&to=" + params[1];
+        get_params = "?userId=" + $("#user-id").val() + "&from=" + params[0] + "&to=" + params[1];
     }
     $(document).ready(function () {
         var dataSource = new kendo.data.DataSource({
             transport: {
                 read: {
-                    url: crudServiceBaseUrl + "get_shifts.php" + get_params,
+                    url: crudServiceBaseUrl + "get_shift_requets.php" + get_params,
                     dataType: "jsonp"
-
                 },
                 update: {
-                    url: crudServiceBaseUrl + "sdfsdf.php",
+                    url: crudServiceBaseUrl + "shift_request.php",
                     dataType: "jsonp"
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
+						console.log(options.models);
+						var req_time = new Date().getTime();
+						for(var i=0; i<options.models.length ; i++){
+							delete options.models[i]['end'];
+							delete options.models[i]['start'];
+							options.models[i]['userEmail'] = $("#user-id").val();
+							options.models[i]['request_time'] = req_time;
+						}	
                         return {
                             models: kendo.stringify(options.models)
                         };
@@ -32,12 +39,10 @@ function showShiftsGrid(params) {
                 model: {
                     id: "idShifts",
                     fields: {
-                        idShifts: {
-                            editable: false
-                        },
-                        part: {
-                            type: "bool"
-                        }
+                        idShifts: { editable: false },
+						userEmail: {type: "string" 	},
+						request_time: {type: "string"},
+                        part: { type: "bool" }
                     }
                 }
             }
@@ -91,7 +96,7 @@ function showShiftsGrid(params) {
         grid.bind("save", grid_save);
 
         function grid_save(e) {
-
+			showMessage("SHOW");
         }
     });
 }
@@ -156,4 +161,79 @@ function showShiftSelection(params) {
 
     $("#central-pane").append(grid);
     showShiftsGrid(params);
+}
+
+function editDetails(){
+	clearCenter();
+	var detailsHtml = '<div id="view" class="details">' +
+						'<ul>' +
+							'<li><label for="fname">First Name:</label><input id="fname" data-bind="value: firstname"  class="k-textbox" /></li>' +
+							'<li><label for="lname">Last Name:</label><input id="lname" data-bind="value: lastname" class="k-textbox"  /></li>' +
+							'<li><label for="phone">Phone Number:</label><input id="phone" data-bind="value: phone" class="k-textbox"  /></li>' +
+							'<li><label for="email"  >Email:</label><input id="email" data-bind="value: email"  class="k-textbox" disabled="disabled"/></li>' + 
+						'</ul>' +
+						'<button data-bind="click: saveChanges" class="k-button" style="display: block><!--data-bind="enabled: agreed, click: register" style="display: block" --> Save</button>' +
+					   '</div>';
+	$("#central-pane").append(detailsHtml);
+	
+
+	var userDetailsDs = new kendo.data.DataSource({
+		 transport: {
+            read: {
+                url: crudServiceBaseUrl + "get_users.php?userId=" + $("#user-id").val(),
+                dataType: "jsonp"
+            },
+            update: {
+                url: crudServiceBaseUrl + "update_users.php",
+                dataType: "jsonp"
+            },
+            parameterMap: function(options, operation) {
+                if (operation !== "read" && options.models) {
+					options.models[0]['idUsers'] = userDetailsDs.data()[0]['id'];
+                    return {
+                        models: kendo.stringify(options.models)
+                    };
+                }
+                return options;
+            }
+        },
+		batch: true,
+		data: "",
+        schema: {
+            model: {
+			   fields: {
+					id: "idUsers",
+					email:{ },
+					firstname: {},
+					lastname: { },
+					phone:{  }
+				}
+            }
+        }
+	});
+	
+	userDetailsDs.fetch(function(){
+		var data = userDetailsDs.data();
+		
+		  var viewModel = kendo.observable({
+            firstname: data[0]['firstname'],
+            lastname: data[0]['lastname'],
+            email: data[0]['email'],
+            phone: data[0]['phone'],
+            saveChanges: function (e) {
+				console.log("SAVE CHANGES IN DETAILS");
+                data[0].set("firstname", $("#fname").val()); 
+				data[0].set("lastname", $("#lname").val()); 
+				data[0].set("phone", $("#phone").val());
+				log(data);
+                userDetailsDs.sync();
+
+               // e.preventDefault();
+
+            }
+        });
+
+        kendo.bind($("#view"), viewModel);
+		
+	});	
 }

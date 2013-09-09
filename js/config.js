@@ -1,4 +1,4 @@
   
-var crudServiceBaseUrl = "http://my.jce.ac.il/~noamtz/ManageEmp/";
+var crudServiceBaseUrl = "http://localhost/ManageEmp/";
  
 var DEBUG = false;	
