@@ -37,20 +37,27 @@ if($valid == false)
 <body>
    <div id="content_wrapper" class="background">
 	<div id="header">
+			<div id="insetBgd">
+				<h1 class="insetType">Manage Employees</h1>
+			</div>
+			
 			<div id="name-area">
 				<input id="user-id" type="hidden" value="<?php echo $_SESSION['username']; ?>"/>
 				<span class="sfont"><?php echo $_SESSION['username']; ?> </span>
 				<a href='../authentication.php?q=logout' class="k-button">logout</a>
 			</div>
+			
+			
 	</div>
 
     <div id="left-pane">
 	<h2 class="head-line"> Navigation </h2>
 
 	<ul>
-	    <li><a class="k-button nav-button" href="javascript:void(0)" onclick="editDetails()">Edit Details</a></li>
+	    <li><a class="k-button nav-button" href="javascript:void(0)" onclick="editDetails()">My Details</a></li>
   	    <li><a class="k-button nav-button" href="javascript:void(0)" onclick="manageShifts()">Manage Shifts</a></li>
-    	<li><a class="k-button nav-button" href="javascript:void(0)" onclick="notImpl()">Browse Shifts</a></li>
+    	<li><a class="k-button nav-button" href="javascript:void(0)" onclick="notImpl()">My Shifts</a></li>
+		<li><a class="k-button nav-button" href="javascript:void(0)" onclick="notImpl()">My Trainings</a></li>
 	</ul>
 
 
@@ -58,7 +65,9 @@ if($valid == false)
 
 	<div id="central-pane"></div> <!-- end of central-pane --> 
 	
-	<div id="footer"></div>
+	<div id="footer">
+		<h4 class="insetType">All Rights Preserved To Noam Tzumie, Alpha Version</h4>
+	</div>
 	
 	<div id="window"></div>
 </div>

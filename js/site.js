@@ -69,6 +69,10 @@ function showUsersGrid() {
                     url: crudServiceBaseUrl + 'create_users.php',
                     dataType: "jsonp"
                 },
+				destroy: {
+                    url: crudServiceBaseUrl + 'delete_user.php' ,
+                    dataType: "jsonp"
+                },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
                         return {
@@ -159,9 +163,9 @@ function showUsersGrid() {
                 title: "Phone",
                 width: 110
             }, {
-                command: ["edit"],
+                command: ["edit","destroy"],
                 title: "&nbsp;",
-                width: "80px"
+                width: "160px"
             }],
             editable: {
                 mode: "popup",
@@ -172,12 +176,16 @@ function showUsersGrid() {
 }
 
 function userGridReqEnd(e) {
-    if (e.type == "update" && !e.response.Errors) {
-        alert("Update record is successfull");
+    if (e.type == "update" && e.response.Errors) {
+        messageBox("Failed to update user details");
     }
 
-    if (e.type == "create" && !e.response.Errors) {
-        alert("Create record is successfull");
+    if (e.type == "create" && e.response.Errors) {
+        messageBox("Failed to create user");
+    }
+	
+	if (e.type == "destroy" && e.response.Errors) {
+        messageBox("Failed to delete user");
     }
 }
 

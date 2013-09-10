@@ -43,6 +43,10 @@ if($valid == false)
     <div id="content_wrapper" class="background">
 
         <div id="header">
+			<div id="insetBgd">
+				<h1 class="insetType">Manage Employees</h1>
+			</div>
+			
 			<div id="name-area">
 				<span class="sfont"><?php echo $_SESSION['username']; ?> </span>
 				<a href='authentication.php?q=logout' class="k-button">logout</a>
@@ -56,13 +60,16 @@ if($valid == false)
 			<ul>
 				<li><a class="k-button nav-button" href="javascript:void(0)" onclick="manageUsers()">Users</a></li>
 				<li><a class="k-button nav-button" href="javascript:void(0)" onclick="manageShifts()">Shifts</a></li>
+				<li><a class="k-button nav-button" href="javascript:void(0)" onclick="notImpl()">Training</a></li>
 				<li><a class="k-button nav-button" href="javascript:void(0)" onclick="notImpl()">Contact</a></li>
 			</ul>
 		</div>
 
 		<div id="central-pane"></div>
 	
-		<div id="footer"></div>
+		<div id="footer">
+			<h4 class="insetType">All Rights Preserved To Noam Tzumie, Alpha Version</h4>
+		</div>
 		
 		<div id="window"></div>
 		

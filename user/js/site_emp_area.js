@@ -165,12 +165,13 @@ function showShiftSelection(params) {
 
 function editDetails(){
 	clearCenter();
-	var detailsHtml = '<div id="view" class="details">' +
+	var detailsHtml = 	'<div class="title">My Details</div>' + 
+						'<div id="view" class="details">' +
 						'<ul>' +
 							'<li><label for="fname">First Name:</label><input id="fname" data-bind="value: firstname"  class="k-textbox" /></li>' +
 							'<li><label for="lname">Last Name:</label><input id="lname" data-bind="value: lastname" class="k-textbox"  /></li>' +
 							'<li><label for="phone">Phone Number:</label><input id="phone" data-bind="value: phone" class="k-textbox"  /></li>' +
-							'<li><label for="email"  >Email:</label><input id="email" data-bind="value: email"  class="k-textbox" disabled="disabled"/></li>' + 
+							'<li><label for="email">Email:</label><input id="email" data-bind="value: email"  class="k-textbox" disabled="disabled"/></li>' + 
 						'</ul>' +
 						'<button data-bind="click: saveChanges" class="k-button" style="display: block><!--data-bind="enabled: agreed, click: register" style="display: block" --> Save</button>' +
 					   '</div>';

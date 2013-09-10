@@ -103,14 +103,40 @@ class DAL{
 		for($i=0;$i<count($data);$i++){
 			$arr = $data[$i];
 			$values = sprintf("('%s','%s','%s','%s')", $arr['email'], $arr['firstname'], $arr['lastname'], $arr['phone']);
+			
 			$query = sprintf('INSERT INTO users (email, firstname, lastname, phone) 
 							  VALUES %s', $values);
+							  
 			if(mysqli_query($con,$query)){			
 				$arr["idUsers"] = $con->insert_id;	
 				array_push($result, $arr);
 			}
+			//Create entry to the system for this user
+			$this->createUserAuth($arr['email'], 123456);
 		}
 		return json_encode($result);
+	}
+	
+	function createUserAuth($email, $password){
+		include 'conn.php';
+		
+		$query = sprintf("INSERT INTO application (password, passwordSalt, role, userEmail)
+				  VALUES ('%s','pslt','user','%s')", $password, $email);
+				  
+		if(!mysqli_query($con,$query)){
+			printf("dal.createUserAuth: Error msg: %s\n", $con->error);
+		}
+	}
+	
+	function deleteUser($email){
+		include 'conn.php';
+		
+		$query = sprintf("DELETE FROM users
+						  WHERE email = '%s'", $email);
+				  
+		if(!mysqli_query($con,$query)){
+			printf("dal.deleteUser: Error msg: %s\n", $con->error);
+		}
 	}
 
 	function getShifts($from, $to){

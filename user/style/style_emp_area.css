@@ -70,14 +70,12 @@ li{
 }
 
         .details {
-            float: left;
-            clear: left;
             width: 370px;
             height: 180px;
-            margin: 75px 0 0 150px;
+            margin-left: auto ;
+			margin-right: auto ;
             padding-top: 10px;
-          
-			border: 1px solid #aaa;
+			//border: 1px solid #aaa;
         }
 
         .details ul {
@@ -134,4 +132,30 @@ li{
 
 	/* W3C Markup, IE10 Release Preview */ 
 	background-image: linear-gradient(to bottom right, #E3FFEF 0%, #B3DBEF 100%);
+}
+
+.title{
+	text-align: center;
+	color: #133759;
+	font-family: Rockwell, Georgia, "Times New Roman", Times, serif;
+	font-size:40px;
+	text-shadow: rgba(0,0,0,0.5) -1px 0, rgba(0,0,0,0.3) 0 -1px, rgba(255,255,255,0.5) 0 1px, rgba(0,0,0,0.3) -1px -2px;
+	margin: 10px;
+}
+
+#insetBgd {
+  width: 250px;
+  height: 49px;
+  float:right;
+  background: -moz-linear-gradient(-90deg,#003471,#448CCB);
+  background: -webkit-gradient(linear, left top, left bottom, from(#003471), to(#448CCB));
+}
+
+h1.insetType {
+  padding-left: 30px; /* The padding is just there to move the h1 element to the center of the div */
+  padding-top: 3px;
+  font-family: Rockwell, Georgia, "Times New Roman", Times, serif;
+  font-size: 20px;
+  color: #0D4383;
+  text-shadow: rgba(0,0,0,0.5) -1px 0, rgba(0,0,0,0.3) 0 -1px, rgba(255,255,255,0.5) 0 1px, rgba(0,0,0,0.3) -1px -2px;
 }

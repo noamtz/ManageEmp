@@ -14,5 +14,5 @@ include 'dal.php';
 $dal = new DAL();
 $result = $dal->createUsers($data);
 
-echo $callback . "(" . $result . ")";
+echo sprintf("%s(%s)", $callback, $result);
 ?>
