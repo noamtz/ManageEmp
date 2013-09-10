@@ -123,6 +123,32 @@ CREATE  TABLE IF NOT EXISTS `noamtz`.`shiftPart` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `noamtz`.`shift_request`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `noamtz`.`shift_request` ;
+
+CREATE  TABLE IF NOT EXISTS `noamtz`.`shift_request` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `idShifts` INT NOT NULL ,
+  `userEmail` VARCHAR(100) NOT NULL ,
+  `request_time` BIGINT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_shift_request_shifts1_idx` (`idShifts` ASC) ,
+  INDEX `fk_shift_request_users1_idx` (`userEmail` ASC) ,
+  CONSTRAINT `fk_shift_request_shifts1`
+    FOREIGN KEY (`idShifts` )
+    REFERENCES `noamtz`.`shifts` (`idShifts` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_shift_request_users1`
+    FOREIGN KEY (`userEmail` )
+    REFERENCES `noamtz`.`users` (`email` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 USE `noamtz` ;
 
 

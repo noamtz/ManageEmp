@@ -35,7 +35,7 @@ if($valid == false)
 
 </head>
 <body>
-   <div id="content_wrapper">
+   <div id="content_wrapper" class="background">
 	<div id="header">
 			<div id="name-area">
 				<input id="user-id" type="hidden" value="<?php echo $_SESSION['username']; ?>"/>
@@ -50,7 +50,7 @@ if($valid == false)
 	<ul>
 	    <li><a class="k-button nav-button" href="javascript:void(0)" onclick="editDetails()">Edit Details</a></li>
   	    <li><a class="k-button nav-button" href="javascript:void(0)" onclick="manageShifts()">Manage Shifts</a></li>
-    	<li><a class="k-button nav-button" href="browseShifts()">Browse Shifts</a></li>
+    	<li><a class="k-button nav-button" href="javascript:void(0)" onclick="notImpl()">Browse Shifts</a></li>
 	</ul>
 
 

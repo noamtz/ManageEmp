@@ -3,17 +3,18 @@
 class DAL{
 
 	function getUsers(){
-		$this->getUser(null);
+		return $this->getUser(null);
 	}
 	
 	function getUser($userId){
 		include 'conn.php';
 
-		$query = "SELECT *
-				  FROM users";
+		$query = "SELECT users.*
+				  FROM users, application 
+				  WHERE application.role = 'user' AND application.userEmail = users.email";
 		
 		if(isset($userId))
-			$query = $query . " WHERE email = '" . $userId . "'";
+			$query = $query . " AND email = '" . $userId . "'";
 		
 		$result = mysqli_query($con,$query);
 									 
@@ -212,7 +213,8 @@ class DAL{
 		include 'conn.php';
 		
 		$query = "SELECT email as idUsers , CONCAT(firstname , ' ' , lastname) as name 
-				  FROM `users`";
+				  FROM `users`, application
+				  WHERE application.role = 'user' AND application.userEmail = users.email";
 				  
 		$result = mysqli_query($con,$query);
 		$items = array();
@@ -248,7 +250,7 @@ class DAL{
 		$shiftId = $arr["idShifts"];
 		$values = sprintf("userEmail='%s',idRoles='%s'", $arr['idUsers'], $arr['idRoles']);
 	
-		$query = sprintf("UPDATE `shiftpart` 
+		$query = sprintf("UPDATE `shiftPart` 
 						  SET %s 
 						  WHERE idShifts='%s'",$values,$shiftId) ;
 
@@ -260,7 +262,7 @@ class DAL{
 	function deleteShiftPatrs($shiftPartId){
 		include 'conn.php';
 		
-		$query = sprintf("DELETE FROM `shiftpart`  
+		$query = sprintf("DELETE FROM `shiftPart`  
 						  WHERE shiftPartId='%s'",$shiftPartId) ;
 		
 		if(!mysqli_query($con,$query)){

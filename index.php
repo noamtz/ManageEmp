@@ -18,7 +18,7 @@ if($valid == false)
 <html>
 
 <head>
-   <title>Manage Guards</title>
+   <title>Admin</title>
 
    <link href="kendoui/examples/content/shared/styles/examples-offline.css" rel="stylesheet">
    <link href="kendoui/styles/kendo.common.min.css" rel="stylesheet">
@@ -40,11 +40,9 @@ if($valid == false)
 
 <body>
 
-    <div
-    id="content_wrapper">
+    <div id="content_wrapper" class="background">
 
-        <div
-        id="header">
+        <div id="header">
 			<div id="name-area">
 				<span class="sfont"><?php echo $_SESSION['username']; ?> </span>
 				<a href='authentication.php?q=logout' class="k-button">logout</a>
@@ -58,15 +56,15 @@ if($valid == false)
 			<ul>
 				<li><a class="k-button nav-button" href="javascript:void(0)" onclick="manageUsers()">Users</a></li>
 				<li><a class="k-button nav-button" href="javascript:void(0)" onclick="manageShifts()">Shifts</a></li>
-				<li><a class="k-button nav-button" href="#">Contact</a></li>
+				<li><a class="k-button nav-button" href="javascript:void(0)" onclick="notImpl()">Contact</a></li>
 			</ul>
 		</div>
 
 		<div id="central-pane"></div>
 	
-		<div id="footer">
-			
-		</div>
+		<div id="footer"></div>
+		
+		<div id="window"></div>
 		
 	</div>
 	

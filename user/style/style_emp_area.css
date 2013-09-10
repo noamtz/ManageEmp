@@ -19,10 +19,10 @@
  }
 #central-pane {
     width: 78%;
-    height: 750px;
+    height: 754px;
     float:left;
-    border: groove;
-	margin-left:7px;
+    border-right: groove;
+	margin-left: 11px;
  }
 #footer {
     width: auto;
@@ -112,3 +112,26 @@ li{
         	float: right;
         	margin-right: 20px;
         }
+		
+		
+.background{
+	/* Note: This gradient may render differently in browsers that don't support the unprefixed gradient syntax */
+
+	/* IE10 Consumer Preview */ 
+	background-image: -ms-linear-gradient(top left, #E3FFEF 0%, #B3DBEF 100%);
+
+	/* Mozilla Firefox */ 
+	background-image: -moz-linear-gradient(top left, #E3FFEF 0%, #B3DBEF 100%);
+
+	/* Opera */ 
+	background-image: -o-linear-gradient(top left, #E3FFEF 0%, #B3DBEF 100%);
+
+	/* Webkit (Safari/Chrome 10) */ 
+	background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #E3FFEF), color-stop(1, #B3DBEF));
+
+	/* Webkit (Chrome 11+) */ 
+	background-image: -webkit-linear-gradient(top left, #E3FFEF 0%, #B3DBEF 100%);
+
+	/* W3C Markup, IE10 Release Preview */ 
+	background-image: linear-gradient(to bottom right, #E3FFEF 0%, #B3DBEF 100%);
+}

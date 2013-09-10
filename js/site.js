@@ -1,6 +1,6 @@
 
-var usersGridHeight = 740;
-var shiftsGridHeight = 630;
+var usersGridHeight = 752;
+var shiftsGridHeight = 639;
 
 //Initialize Globals
 var dropDownDataSource = new kendo.data.DataSource({
@@ -487,7 +487,7 @@ function initDatesPicker() {
             }
         }).attr("readonly", true);
 		
-		$("#monthpicker-to").data("kendoDatePicker").value(new Date());
-		$("#monthpicker-from").data("kendoDatePicker").value(new Date(2012,0,1));
+		$("#monthpicker-to").data("kendoDatePicker").value(new Date(2013,11,1));
+		$("#monthpicker-from").data("kendoDatePicker").value(new Date(2013,0,1));
     });
 }

@@ -1,4 +1,4 @@
-var gridSize = 365;
+var gridSize = 639;
 
 function showShiftsGrid(params) {
     var get_params = "";
@@ -54,7 +54,7 @@ function showShiftsGrid(params) {
             editable: "inline",
             navigatable: true,
             pageable: true,
-            height: 630,
+            height: gridSize,
             sortable: true,
             toolbar: ["save", "cancel"],
             columns: [{

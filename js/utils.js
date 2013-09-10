@@ -79,3 +79,7 @@ function messageBox(msg, title) {
 function log(msg) {
     console.log(msg);
 }
+
+function notImpl(){
+	messageBox("Functionality of this button is not implemented yet" , "INFO");
+}

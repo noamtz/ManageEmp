@@ -34,6 +34,19 @@ INSERT INTO `managedb`.`roles` (`type`) VALUES ('MasterDiver');
 
 INSERT INTO `managedb`.`roles` (`type`) VALUES ('Sailor');
 
+
+-- -----------------------------------------------------
+-- Create shifts
+-- -----------------------------------------------------
+
+INSERT INTO `managedb`.`shifts` (`idShifts`, `start`, `end`) VALUES (NULL, '2013-09-23', '2013-09-27');
+
+INSERT INTO `managedb`.`shifts` (`idShifts`, `start`, `end`) VALUES (NULL, '2013-09-28', '2013-10-01');
+
+INSERT INTO `managedb`.`shifts` (`idShifts`, `start`, `end`) VALUES (NULL, '2013-10-02', '2013-10-07');
+
+INSERT INTO `managedb`.`shifts` (`idShifts`, `start`, `end`) VALUES (NULL, '2013-10-08', '2013-10-13');
+
 -- -----------------------------------------------------
 -- Create user_has_roles
 -- -----------------------------------------------------
@@ -56,6 +69,15 @@ INSERT INTO `managedb`.`users_has_roles` (`userEmail`, `idRoles`) VALUES ('reut@
 
 INSERT INTO `managedb`.`application` (`idApplication`, `password`, `passwordSalt`, `role`, `userEmail`) 
 VALUES (NULL, '7c4a8d09ca3762af61e59520943dc26494f8941b', 'pslt', 'user', 'noam@gmail.com');
+
+INSERT INTO `managedb`.`application` (`idApplication`, `password`, `passwordSalt`, `role`, `userEmail`) 
+VALUES (NULL, '7c4a8d09ca3762af61e59520943dc26494f8941b', 'pslt', 'user', 'david@gmail.com');
+
+INSERT INTO `managedb`.`application` (`idApplication`, `password`, `passwordSalt`, `role`, `userEmail`) 
+VALUES (NULL, '7c4a8d09ca3762af61e59520943dc26494f8941b', 'pslt', 'user', 'avi@gmail.com');
+
+INSERT INTO `managedb`.`application` (`idApplication`, `password`, `passwordSalt`, `role`, `userEmail`) 
+VALUES (NULL, '7c4a8d09ca3762af61e59520943dc26494f8941b', 'pslt', 'user', 'reut@gmail.com');
 
 INSERT INTO `managedb`.`application` (`idApplication`, `password`, `passwordSalt`, `role`, `userEmail`) 
 VALUES (NULL, '7c4a8d09ca3762af61e59520943dc26494f8941b', 'pslt', 'admin', 'admin@gmail.com');
